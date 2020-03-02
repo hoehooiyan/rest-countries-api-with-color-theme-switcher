@@ -28,7 +28,7 @@ export const Input = styled.input`
   font-weight: ${typography.fontWeight.regular};
   height: 4.8rem;
   outline: none;
-  padding: 1.6rem 15.3rem 1.6rem 7.4rem;
+  padding: 1.6rem 15.3rem 1.6rem 7.4rem; // !FIXME 
   width: 100%;
 
   ::placeholder {

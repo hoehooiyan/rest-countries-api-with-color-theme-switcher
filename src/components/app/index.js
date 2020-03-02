@@ -11,6 +11,7 @@ import colors from '../../styles/Colors'
 // Components
 import Header from '../header'
 import SearchBar from '../searchBar'
+import FilterRegion from '../filterRegion'
 
 const App = () => {
   // Implement local storage to persist user selected theme
@@ -60,6 +61,7 @@ const App = () => {
           />
         )}
         <SearchBar />
+        <FilterRegion />
       </div>
     </ThemeProvider>
   )
