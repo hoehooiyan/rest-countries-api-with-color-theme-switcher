@@ -10,6 +10,7 @@ import colors from '../../styles/Colors'
 
 // Components
 import Header from '../header'
+import SearchBar from '../searchBar'
 
 const App = () => {
   // Implement local storage to persist user selected theme
@@ -30,20 +31,19 @@ const App = () => {
         setCountries(data)
       })
       .catch(error => console.error(error))
-  }, [isLightMode])
+  }, [])
 
   // Let user toggle between light & dark mode
   const toggleTheme = e => {
     setIsLightMode(!isLightMode)
-
     localStorage.setItem('isLightMode', !isLightMode)
   }
 
   // Destructure dark & light mode from colors
-  // const { darkMode, lightMode } = colors
+  const { darkMode, lightMode } = colors
 
   return (
-    <ThemeProvider theme={isLightMode ? colors.lightMode : colors.darkMode}>
+    <ThemeProvider theme={isLightMode ? lightMode : darkMode}>
       <div>
         <GlobalStyles />
         {isLightMode ? (
@@ -59,6 +59,7 @@ const App = () => {
             toggleTheme={toggleTheme}
           />
         )}
+        <SearchBar />
       </div>
     </ThemeProvider>
   )

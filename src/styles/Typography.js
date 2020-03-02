@@ -6,6 +6,7 @@ const typography = {
   },
   fontWeight: {
     light: 300,
+    regular: 400,
     semiBold: 600,
     extraBold: 800
   }
