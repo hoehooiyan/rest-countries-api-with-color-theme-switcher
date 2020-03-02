@@ -16,6 +16,8 @@ export default createGlobalStyle`
   }
 
   body {
+    background-color: ${props => props.theme.background};
+    font-family: ${typography.primaryFont};
     font-size: ${typography.fontSize.homepageItem};
     max-width: ${breakpoints.largeDesktop};
   }
