@@ -25,6 +25,9 @@ const App = () => {
   // Save all countries in the array
   const [countries, setCountries] = useState([])
 
+  // Save user's search term
+  const [userInput, setUserInput] = useState('')
+
   // Call the api the app starts
   useEffect(() => {
     restApi('/all')
@@ -36,10 +39,20 @@ const App = () => {
   }, [])
 
   // Let user toggle between light & dark mode
-  const toggleTheme = e => {
+  const toggleTheme = () => {
     setIsLightMode(!isLightMode)
     localStorage.setItem('isLightMode', !isLightMode)
   }
+
+  // Let user type in the country name
+  const searchCountry = e => {
+    setUserInput(e.target.value)
+  }
+
+  // Find which countries are match with userInput
+  const filteredCountries = countries.filter(country => {
+    return country.name.toLowerCase().includes(userInput.toLowerCase())
+  })
 
   // Destructure dark & light mode from colors
   const { darkMode, lightMode } = colors
@@ -61,22 +74,39 @@ const App = () => {
             toggleTheme={toggleTheme}
           />
         )}
-        <SearchBar />
+        <SearchBar searchCountry={searchCountry} />
         <FilterRegion />
-        <Styled.Countries>
-          {countries.map(country => {
-            return (
-              <Country
-                key={country.name}
-                flag={country.flag}
-                name={country.name}
-                population={country.population}
-                region={country.region}
-                capital={country.capital}
-              />
-            )
-          })}
-        </Styled.Countries>
+        {userInput ? (
+          <Styled.Countries>
+            {filteredCountries.map(country => {
+              return (
+                <Country
+                  key={country.name}
+                  flag={country.flag}
+                  name={country.name}
+                  population={country.population}
+                  region={country.region}
+                  capital={country.capital}
+                />
+              )
+            })}
+          </Styled.Countries>
+        ) : (
+          <Styled.Countries>
+            {countries.map(country => {
+              return (
+                <Country
+                  key={country.name}
+                  flag={country.flag}
+                  name={country.name}
+                  population={country.population}
+                  region={country.region}
+                  capital={country.capital}
+                />
+              )
+            })}
+          </Styled.Countries>
+        )}
       </div>
     </ThemeProvider>
   )
