@@ -4,8 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import * as Styled from './styles'
 
 const SearchBar = ({ searchCountry }) => {
+  const handleSubmit = e => {
+    e.preventDefault()
+  }
+
   return (
-    <Styled.SearchBar>
+    <Styled.SearchBar onSubmit={handleSubmit}>
       <FontAwesomeIcon icon='search' className='icon' />
       <Styled.Input
         placeholder='Search for a country...'
