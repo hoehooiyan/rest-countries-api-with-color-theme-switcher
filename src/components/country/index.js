@@ -1,6 +1,7 @@
 import React from 'react'
 
 import * as Styled from './styles'
+import addComma from '../../utils/addComma'
 
 const Country = ({ flag, name, population, region, capital }) => {
   return (
@@ -11,7 +12,8 @@ const Country = ({ flag, name, population, region, capital }) => {
       <Styled.Metadata>
         <Styled.Info>
           {/* TODO Insert comma in between */}
-          Population: <Styled.ActualData>{population}</Styled.ActualData>
+          Population:{' '}
+          <Styled.ActualData>{addComma(population)}</Styled.ActualData>
         </Styled.Info>
         <Styled.Info>
           Region: <Styled.ActualData>{region}</Styled.ActualData>

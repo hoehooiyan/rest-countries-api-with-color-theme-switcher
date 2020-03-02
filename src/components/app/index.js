@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { ThemeProvider } from 'styled-components'
 
-import '../../icon/fontawesome'
+import '../../utils/fontawesome'
 import restApi from '../../apis/api'
 
 // Styles
