@@ -11,7 +11,6 @@ const Country = ({ flag, name, population, region, capital }) => {
       <Styled.Name>{name}</Styled.Name>
       <Styled.Metadata>
         <Styled.Info>
-          {/* TODO Insert comma in between */}
           Population:{' '}
           <Styled.ActualData>{addComma(population)}</Styled.ActualData>
         </Styled.Info>
