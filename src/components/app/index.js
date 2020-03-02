@@ -25,8 +25,8 @@ const App = () => {
   // Save all countries in the array
   const [countries, setCountries] = useState([])
 
-  // Save user's search term
-  const [userInput, setUserInput] = useState('')
+  // Region selected by user
+  const [regionSelected, setRegionSelected] = useState('')
 
   // Call the api the app starts
   useEffect(() => {
@@ -36,7 +36,19 @@ const App = () => {
         setCountries(data)
       })
       .catch(error => console.error(error))
-  }, [])
+  }, [countries, regionSelected])
+
+  // Save user's search term
+  const [userInput, setUserInput] = useState('')
+
+  // Let user type in the country name
+  const searchCountry = e => {
+    setUserInput(e.target.value)
+  }
+
+  const selectedRegion = e => {
+    setRegionSelected(e.target.textContent)
+  }
 
   // Let user toggle between light & dark mode
   const toggleTheme = () => {
@@ -44,15 +56,71 @@ const App = () => {
     localStorage.setItem('isLightMode', !isLightMode)
   }
 
-  // Let user type in the country name
-  const searchCountry = e => {
-    setUserInput(e.target.value)
-  }
-
   // Find which countries are match with userInput
   const filteredCountries = countries.filter(country => {
     return country.name.toLowerCase().includes(userInput.toLowerCase())
   })
+
+  // Return a new array with country filtered by region
+  const filteredRegion = countries.filter(country => {
+    return country.region.toLowerCase().includes(regionSelected.toLowerCase())
+  })
+
+  // Checking what countries to be displayed on screen
+  const renderedCountries = array => {
+    if (array === countries) {
+      return (
+        <Styled.Countries>
+          {countries.map(country => {
+            return (
+              <Country
+                key={country.name}
+                flag={country.flag}
+                name={country.name}
+                population={country.population}
+                region={country.region}
+                capital={country.capital}
+              />
+            )
+          })}
+        </Styled.Countries>
+      )
+    } else if (array === filteredCountries) {
+      return (
+        <Styled.Countries>
+          {filteredCountries.map(country => {
+            return (
+              <Country
+                key={country.name}
+                flag={country.flag}
+                name={country.name}
+                population={country.population}
+                region={country.region}
+                capital={country.capital}
+              />
+            )
+          })}
+        </Styled.Countries>
+      )
+    } else if (array === filteredRegion) {
+      return (
+        <Styled.Countries>
+          {filteredRegion.map(country => {
+            return (
+              <Country
+                key={country.name}
+                flag={country.flag}
+                name={country.name}
+                population={country.population}
+                region={country.region}
+                capital={country.capital}
+              />
+            )
+          })}
+        </Styled.Countries>
+      )
+    }
+  }
 
   // Destructure dark & light mode from colors
   const { darkMode, lightMode } = colors
@@ -75,38 +143,12 @@ const App = () => {
           />
         )}
         <SearchBar searchCountry={searchCountry} />
-        <FilterRegion />
-        {userInput ? (
-          <Styled.Countries>
-            {filteredCountries.map(country => {
-              return (
-                <Country
-                  key={country.name}
-                  flag={country.flag}
-                  name={country.name}
-                  population={country.population}
-                  region={country.region}
-                  capital={country.capital}
-                />
-              )
-            })}
-          </Styled.Countries>
-        ) : (
-          <Styled.Countries>
-            {countries.map(country => {
-              return (
-                <Country
-                  key={country.name}
-                  flag={country.flag}
-                  name={country.name}
-                  population={country.population}
-                  region={country.region}
-                  capital={country.capital}
-                />
-              )
-            })}
-          </Styled.Countries>
-        )}
+        <FilterRegion selectedRegion={selectedRegion} />
+        {userInput
+          ? renderedCountries(filteredCountries)
+          : regionSelected
+          ? renderedCountries(filteredRegion)
+          : renderedCountries(countries)}
       </div>
     </ThemeProvider>
   )
