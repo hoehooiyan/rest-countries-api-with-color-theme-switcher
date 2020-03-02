@@ -7,11 +7,13 @@ import restApi from '../../apis/api'
 // Styles
 import GlobalStyles from '../../styles/GlobalStyles'
 import colors from '../../styles/Colors'
+import * as Styled from './styles'
 
 // Components
 import Header from '../header'
 import SearchBar from '../searchBar'
 import FilterRegion from '../filterRegion'
+import Country from '../country'
 
 const App = () => {
   // Implement local storage to persist user selected theme
@@ -28,7 +30,6 @@ const App = () => {
     restApi('/all')
       .then(response => {
         const { data } = response
-        console.log(data) // ! FIXME
         setCountries(data)
       })
       .catch(error => console.error(error))
@@ -62,6 +63,20 @@ const App = () => {
         )}
         <SearchBar />
         <FilterRegion />
+        <Styled.Countries>
+          {countries.map(country => {
+            return (
+              <Country
+                key={country.name}
+                flag={country.flag}
+                name={country.name}
+                population={country.population}
+                region={country.region}
+                capital={country.capital}
+              />
+            )
+          })}
+        </Styled.Countries>
       </div>
     </ThemeProvider>
   )
