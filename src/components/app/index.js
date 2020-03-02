@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { ThemeProvider } from 'styled-components'
+// import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 
 import '../../utils/fontawesome'
-import restApi from '../../apis/api'
+import restApi from '../../apis'
 
 // Styles
 import GlobalStyles from '../../styles/GlobalStyles'
@@ -25,9 +26,6 @@ const App = () => {
   // Save all countries in the array
   const [countries, setCountries] = useState([])
 
-  // Region selected by user
-  const [regionSelected, setRegionSelected] = useState('')
-
   // Call the api the app starts
   useEffect(() => {
     restApi('/all')
@@ -38,17 +36,36 @@ const App = () => {
       .catch(error => console.error(error))
   }, [])
 
-  // Save user's search term
-  const [userInput, setUserInput] = useState('')
-
   // Let user type in the country name
+  const [userInput, setUserInput] = useState('')
   const searchCountry = e => {
     setUserInput(e.target.value)
   }
 
+  // Region selected by user
+  const [regionSelected, setRegionSelected] = useState('')
   const selectedRegion = e => {
     setRegionSelected(e.target.textContent)
   }
+
+  // Check if the user click on a country already
+  const [isCountryClicked, setIsCountryClicked] = useState(false)
+
+  // A specific country selected by user
+  const [countrySelected, setCountrySelected] = useState('')
+  const selectedCountry = e => {
+    e.preventDefault()
+    setIsCountryClicked(true)
+    setCountrySelected(e.target.nextSibling.textContent)
+  }
+  // Get the details of the selected country
+  useEffect(() => {
+    restApi(`/name/${countrySelected}?fullText=true`)
+      .then(response => {
+        console.log(response.data)
+      })
+      .catch(error => console.error(error))
+  }, [isCountryClicked, countrySelected])
 
   // Let user toggle between light & dark mode
   const toggleTheme = () => {
@@ -74,6 +91,7 @@ const App = () => {
           {countries.map(country => {
             return (
               <Country
+                selectedCountry={selectedCountry}
                 key={country.name}
                 flag={country.flag}
                 name={country.name}
@@ -91,6 +109,7 @@ const App = () => {
           {filteredCountries.map(country => {
             return (
               <Country
+                selectedCountry={selectedCountry}
                 key={country.name}
                 flag={country.flag}
                 name={country.name}
@@ -108,6 +127,7 @@ const App = () => {
           {filteredRegion.map(country => {
             return (
               <Country
+                selectedCountry={selectedCountry}
                 key={country.name}
                 flag={country.flag}
                 name={country.name}

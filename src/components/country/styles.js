@@ -7,7 +7,6 @@ export const Country = styled.div`
   flex-direction: column;
   background-color: ${props => props.theme.element};
   color: ${props => props.theme.text};
-  cursor: pointer;
   width: 26.4rem;
 
   &:not(:last-child) {
@@ -18,6 +17,7 @@ export const Country = styled.div`
 export const Flag = styled.img`
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
+  cursor: pointer;
   width: 100%;
 `
 
