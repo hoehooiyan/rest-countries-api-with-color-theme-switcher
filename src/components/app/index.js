@@ -36,7 +36,7 @@ const App = () => {
         setCountries(data)
       })
       .catch(error => console.error(error))
-  }, [countries, regionSelected])
+  }, [])
 
   // Save user's search term
   const [userInput, setUserInput] = useState('')

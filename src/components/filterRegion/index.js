@@ -12,12 +12,11 @@ const FilterRegion = ({ selectedRegion }) => {
 
   return (
     <Styled.FilterContainer>
-      <Styled.TopContainer>
+      <Styled.TopContainer onClick={toggleDropdown} >
         <Styled.Text>Filter by Region</Styled.Text>
         <FontAwesomeIcon
           icon={!isOpen ? 'chevron-down' : 'chevron-up'}
           className='icon'
-          onClick={toggleDropdown}
         />
       </Styled.TopContainer>
       {!isOpen ? null : (

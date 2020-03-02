@@ -7,6 +7,7 @@ export const Country = styled.div`
   flex-direction: column;
   background-color: ${props => props.theme.element};
   color: ${props => props.theme.text};
+  cursor: pointer;
   width: 26.4rem;
 
   &:not(:last-child) {
@@ -35,7 +36,6 @@ export const Metadata = styled.div`
 
 export const Info = styled.p`
   font-weight: ${typography.fontWeight.semiBold};
-
 `
 
 export const ActualData = styled.span`
