@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import * as Styled from './styles'
 import addComma from '../../utils/addComma'
@@ -11,8 +11,6 @@ const Country = ({
   region,
   capital
 }) => {
-  // const [selectedCountry, setSelectedCountry] = useState('')
-
   return (
     <Styled.Country>
       {/* TODO Adjust the image size */}

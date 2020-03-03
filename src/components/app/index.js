@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { ThemeProvider } from 'styled-components'
 // import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 
@@ -30,16 +30,11 @@ class App extends React.Component {
     const localData = localStorage.getItem('isLightMode')
 
     // Check if the localStorage is available
-    if (localData === 'true') {
-      this.setState({
-        isLightMode: true
-      })
-    } else {
-      this.setState({
-        isLightMode: false
-      })
-    }
+    localData === 'true'
+      ? this.setState({ isLightMode: true })
+      : this.setState({ isLightMode: false })
 
+    // Call the api to get all country data
     restApi('/all')
       .then(response => {
         const { data } = response
@@ -78,9 +73,11 @@ class App extends React.Component {
     }
 
     // A specific country selected by user
-    const selectedCountry = e => {
+    const selectedCountry = async e => {
       e.preventDefault()
-      this.setState({
+      // e.persist()
+      console.log(countrySelected)
+      await this.setState({
         countrySelected: e.target.nextSibling.textContent
       })
       console.log(countrySelected)
@@ -186,6 +183,8 @@ class App extends React.Component {
             ? renderedCountries(filteredCountries)
             : regionSelected
             ? renderedCountries(filteredRegion)
+            : countrySelected
+            ? renderedCountries(countrySelected)
             : renderedCountries(countries)}
         </div>
       </ThemeProvider>
