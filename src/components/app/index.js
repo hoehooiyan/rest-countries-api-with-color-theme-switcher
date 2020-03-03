@@ -1,6 +1,6 @@
 import React from 'react'
 import { ThemeProvider } from 'styled-components'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+// import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 import '../../utils/fontawesome'
 import restApi from '../../apis'
@@ -73,14 +73,16 @@ class App extends React.Component {
     }
 
     // A specific country selected by user
-    const selectedCountry = async e => {
-      e.preventDefault()
-      // e.persist()
-      console.log(countrySelected)
-      await this.setState({
-        countrySelected: e.target.nextSibling.textContent
-      })
-      console.log(countrySelected)
+    const selectedCountry = e => {
+      console.log('changing state')
+      this.setState(
+        {
+          countrySelected: e.target.nextSibling.textContent
+        },
+        () => {
+          console.log('new state', this.state.countrySelected)
+        }
+      )
     }
 
     // Let user toggle between light & dark mode
@@ -182,9 +184,9 @@ class App extends React.Component {
           {userInput
             ? renderedCountries(filteredCountries)
             : regionSelected
+            ? countrySelected
+            : renderedCountries(countrySelected)
             ? renderedCountries(filteredRegion)
-            : countrySelected
-            ? renderedCountries(countrySelected)
             : renderedCountries(countries)}
         </div>
       </ThemeProvider>

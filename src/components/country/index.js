@@ -12,10 +12,10 @@ const Country = ({
   capital
 }) => {
   return (
-    <Styled.Country>
+    <Styled.Country onClick={selectedCountry}>
       {/* TODO Adjust the image size */}
-      <Styled.Flag src={flag} alt={name} onClick={selectedCountry} />
-      <Styled.Name>{name}</Styled.Name>
+      <Styled.Flag src={flag} alt={name} />
+      <Styled.Name id='country-name'>{name}</Styled.Name>
       <Styled.Metadata>
         <Styled.Info>
           Population:

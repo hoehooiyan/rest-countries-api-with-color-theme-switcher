@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 
 import typography from '../../styles/Typography'
 
@@ -13,7 +13,7 @@ export const Header = styled.header`
   padding: 0 1.7rem 0 1.6rem;
 `
 
-export const SiteTitle = styled(Link)`
+export const SiteTitle = styled.h1`
   color: ${props => props.theme.text};
   font-size: ${typography.fontSize.homepageItem};
   font-weight: ${typography.fontWeight.extraBold};
