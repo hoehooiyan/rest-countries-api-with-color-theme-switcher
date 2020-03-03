@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { ThemeProvider } from 'styled-components'
 // import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 
@@ -18,10 +18,28 @@ import Country from '../country'
 
 class App extends React.Component {
   state = {
-    countries: []
+    countries: [],
+    userInput: '',
+    regionSelected: '',
+    countrySelected: '',
+    isLightMode: true
   }
 
   componentDidMount() {
+    // Implement local storage to persist user selected theme
+    const localData = localStorage.getItem('isLightMode')
+
+    // Check if the localStorage is available
+    if (localData === 'true') {
+      this.setState({
+        isLightMode: true
+      })
+    } else {
+      this.setState({
+        isLightMode: false
+      })
+    }
+
     restApi('/all')
       .then(response => {
         const { data } = response
@@ -33,59 +51,46 @@ class App extends React.Component {
   }
 
   render() {
-    // Implement local storage to persist user selected theme
-    const localData = localStorage.getItem('isLightMode')
-    const [isLightMode, setIsLightMode] = useState(
-      localData === 'true' ? true : false
-    )
+    // Destructure states
+    const {
+      countries,
+      userInput,
+      regionSelected,
+      countrySelected,
+      isLightMode
+    } = this.state
 
-    // Save all countries in the array
-    const [countries, setCountries] = useState([])
-
-    // Call the api the app starts
-    useEffect(() => {
-      restApi('/all')
-        .then(response => {
-          const { data } = response
-          setCountries(data)
-        })
-        .catch(error => console.error(error))
-    }, [])
+    // Destructure dark & light mode from colors
+    const { darkMode, lightMode } = colors
 
     // Let user type in the country name
-    const [userInput, setUserInput] = useState('')
     const searchCountry = e => {
-      setUserInput(e.target.value)
+      this.setState({
+        userInput: e.target.value
+      })
     }
 
     // Region selected by user
-    const [regionSelected, setRegionSelected] = useState('')
     const selectedRegion = e => {
-      setRegionSelected(e.target.textContent)
+      this.setState({
+        regionSelected: e.target.textContent
+      })
     }
-
-    // Check if the user click on a country already
-    const [isCountryClicked, setIsCountryClicked] = useState(false)
 
     // A specific country selected by user
-    const [countrySelected, setCountrySelected] = useState('')
     const selectedCountry = e => {
       e.preventDefault()
-      setIsCountryClicked(true)
-      setCountrySelected(e.target.nextSibling.textContent)
+      this.setState({
+        countrySelected: e.target.nextSibling.textContent
+      })
+      console.log(countrySelected)
     }
-    // Get the details of the selected country
-    useEffect(() => {
-      restApi(`/name/${countrySelected}?fullText=true`)
-        .then(response => {
-          console.log(response.data)
-        })
-        .catch(error => console.error(error))
-    }, [isCountryClicked, countrySelected])
 
     // Let user toggle between light & dark mode
     const toggleTheme = () => {
-      setIsLightMode(!isLightMode)
+      this.setState({
+        isLightMode: !isLightMode
+      })
       localStorage.setItem('isLightMode', !isLightMode)
     }
 
@@ -157,8 +162,6 @@ class App extends React.Component {
         )
       }
     }
-    // Destructure dark & light mode from colors
-    const { darkMode, lightMode } = colors
 
     return (
       <ThemeProvider theme={isLightMode ? lightMode : darkMode}>
