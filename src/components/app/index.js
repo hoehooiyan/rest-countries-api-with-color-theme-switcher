@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useLayoutEffect } from 'react'
 import { ThemeProvider } from 'styled-components'
-// import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 import '../../utils/fontawesome'
 import restApi from '../../apis'
@@ -23,19 +23,6 @@ const App = () => {
     localData === 'true' ? true : false
   )
 
-  // Save all countries in the array
-  const [countries, setCountries] = useState([])
-
-  // Call the api the app starts
-  useEffect(() => {
-    restApi('/all')
-      .then(response => {
-        const { data } = response
-        setCountries(data)
-      })
-      .catch(error => console.error(error))
-  }, [])
-
   // Let user type in the country name
   const [userInput, setUserInput] = useState('')
   const searchCountry = e => {
@@ -46,26 +33,42 @@ const App = () => {
   const [regionSelected, setRegionSelected] = useState('')
   const selectedRegion = e => {
     setRegionSelected(e.target.textContent)
+    console.log(regionSelected)
   }
-
-  // Check if the user click on a country already
-  const [isCountryClicked, setIsCountryClicked] = useState(false)
 
   // A specific country selected by user
   const [countrySelected, setCountrySelected] = useState('')
   const selectedCountry = e => {
     e.preventDefault()
-    setIsCountryClicked(true)
+    // setIsCountryClicked(!isCountryClicked)
     setCountrySelected(e.target.nextSibling.textContent)
+    console.log(countrySelected)
   }
-  // Get the details of the selected country
-  useEffect(() => {
-    restApi(`/name/${countrySelected}?fullText=true`)
+
+  // Save all countries in the array
+  const [countries, setCountries] = useState([])
+
+  // Call the api the app starts
+  useLayoutEffect(() => {
+    restApi('/all')
       .then(response => {
-        console.log(response.data)
+        const { data } = response
+        setCountries(data)
       })
       .catch(error => console.error(error))
-  }, [isCountryClicked, countrySelected])
+  }, [])
+
+  // Check if the user click on a country already
+  // const [isCountryClicked, setIsCountryClicked] = useState(false)
+
+  // Get the details of the selected country
+  // useEffect(() => {
+  //   restApi(`/name/${countrySelected}?fullText=true`)
+  //     .then(response => {
+  //       console.log(response.data)
+  //     })
+  //     .catch(error => console.error(error))
+  // }, [isCountryClicked, countrySelected])
 
   // Let user toggle between light & dark mode
   const toggleTheme = () => {
@@ -81,6 +84,11 @@ const App = () => {
   // Return a new array with country filtered by region
   const filteredRegion = countries.filter(country => {
     return country.region.toLowerCase().includes(regionSelected.toLowerCase())
+  })
+
+  // Return only the details that the user clicked on
+  const clickedCountry = countries.filter(country => {
+    return country.name.includes(countrySelected)
   })
 
   // Checking what countries to be displayed on screen
@@ -147,29 +155,39 @@ const App = () => {
 
   return (
     <ThemeProvider theme={isLightMode ? lightMode : darkMode}>
-      <div>
-        <GlobalStyles />
-        {isLightMode ? (
-          <Header
-            icon='moon'
-            toggleText='Dark Mode'
-            toggleTheme={toggleTheme}
-          />
-        ) : (
-          <Header
-            icon='sun'
-            toggleText='Light Mode'
-            toggleTheme={toggleTheme}
-          />
-        )}
-        <SearchBar searchCountry={searchCountry} />
-        <FilterRegion selectedRegion={selectedRegion} />
-        {userInput
-          ? renderedCountries(filteredCountries)
-          : regionSelected
-          ? renderedCountries(filteredRegion)
-          : renderedCountries(countries)}
-      </div>
+      <Router>
+        <div>
+          <GlobalStyles />
+          {isLightMode ? (
+            <Header
+              icon='moon'
+              toggleText='Dark Mode'
+              toggleTheme={toggleTheme}
+            />
+          ) : (
+            <Header
+              icon='sun'
+              toggleText='Light Mode'
+              toggleTheme={toggleTheme}
+            />
+          )}
+          <SearchBar searchCountry={searchCountry} />
+          <FilterRegion selectedRegion={selectedRegion} />
+          <Switch>
+            {userInput ? (
+              <Route>{renderedCountries(filteredCountries)}</Route>
+            ) : regionSelected ? (
+              <Route>{renderedCountries(filteredRegion)}</Route>
+            ) : countrySelected ? (
+              <Route>{renderedCountries(clickedCountry)}</Route>
+            ) : (
+              <Route exact path='/'>
+                {renderedCountries(countries)}
+              </Route>
+            )}
+          </Switch>
+        </div>
+      </Router>
     </ThemeProvider>
   )
 }

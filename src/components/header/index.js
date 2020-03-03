@@ -8,7 +8,9 @@ const Header = ({ icon, toggleText, toggleTheme }) => {
   // console.log(props.theme.whiteElement)
   return (
     <Styled.Header>
-      <Styled.SiteTitle>Where in the world?</Styled.SiteTitle>
+      <Styled.SiteTitle exact='true' to='/'>
+        Where in the world?
+      </Styled.SiteTitle>
       <Styled.DarkModeToggler onClick={toggleTheme}>
         <FontAwesomeIcon icon={icon} className='icon' />
         <Styled.DarkModeText>{toggleText}</Styled.DarkModeText>
