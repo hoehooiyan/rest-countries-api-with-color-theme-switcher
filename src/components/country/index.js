@@ -11,8 +11,6 @@ const Country = ({
   region,
   capital
 }) => {
-  // const [selectedCountry, setSelectedCountry] = useState('')
-
   return (
     <Styled.Country>
       {/* TODO Adjust the image size */}

@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from 'react'
+import React from 'react'
 import { ThemeProvider } from 'styled-components'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
@@ -16,146 +16,152 @@ import SearchBar from '../searchBar'
 import FilterRegion from '../filterRegion'
 import Country from '../country'
 
-const App = () => {
-  // Implement local storage to persist user selected theme
-  const localData = localStorage.getItem('isLightMode')
-  const [isLightMode, setIsLightMode] = useState(
-    localData === 'true' ? true : false
-  )
-
-  // Let user type in the country name
-  const [userInput, setUserInput] = useState('')
-  const searchCountry = e => {
-    setUserInput(e.target.value)
+class App extends React.Component {
+  state = {
+    countries: [],
+    userInput: '',
+    regionSelected: '',
+    countrySelected: '',
+    isLightMode: true
   }
 
-  // Region selected by user
-  const [regionSelected, setRegionSelected] = useState('')
-  const selectedRegion = e => {
-    setRegionSelected(e.target.textContent)
-    console.log(regionSelected)
-  }
+  componentDidMount() {
+    // Implement local storage to persist user selected theme
+    const localData = localStorage.getItem('isLightMode')
 
-  // A specific country selected by user
-  const [countrySelected, setCountrySelected] = useState('')
-  const selectedCountry = e => {
-    e.preventDefault()
-    // setIsCountryClicked(!isCountryClicked)
-    setCountrySelected(e.target.nextSibling.textContent)
-    console.log(countrySelected)
-  }
+    // Check if the localStorage is available
+    localData === 'true'
+      ? this.setState({ isLightMode: true })
+      : this.setState({ isLightMode: false })
 
-  // Save all countries in the array
-  const [countries, setCountries] = useState([])
-
-  // Call the api the app starts
-  useLayoutEffect(() => {
+    // Call the api to get all country data
     restApi('/all')
       .then(response => {
         const { data } = response
-        setCountries(data)
+        this.setState({
+          countries: data
+        })
       })
       .catch(error => console.error(error))
-  }, [])
-
-  // Check if the user click on a country already
-  // const [isCountryClicked, setIsCountryClicked] = useState(false)
-
-  // Get the details of the selected country
-  // useEffect(() => {
-  //   restApi(`/name/${countrySelected}?fullText=true`)
-  //     .then(response => {
-  //       console.log(response.data)
-  //     })
-  //     .catch(error => console.error(error))
-  // }, [isCountryClicked, countrySelected])
-
-  // Let user toggle between light & dark mode
-  const toggleTheme = () => {
-    setIsLightMode(!isLightMode)
-    localStorage.setItem('isLightMode', !isLightMode)
   }
 
-  // Find which countries are match with userInput
-  const filteredCountries = countries.filter(country => {
-    return country.name.toLowerCase().includes(userInput.toLowerCase())
-  })
+  render() {
+    // Destructure states
+    const {
+      countries,
+      userInput,
+      regionSelected,
+      countrySelected,
+      isLightMode
+    } = this.state
 
-  // Return a new array with country filtered by region
-  const filteredRegion = countries.filter(country => {
-    return country.region.toLowerCase().includes(regionSelected.toLowerCase())
-  })
+    // Destructure dark & light mode from colors
+    const { darkMode, lightMode } = colors
 
-  // Return only the details that the user clicked on
-  const clickedCountry = countries.filter(country => {
-    return country.name.includes(countrySelected)
-  })
-
-  // Checking what countries to be displayed on screen
-  const renderedCountries = array => {
-    if (array === countries) {
-      return (
-        <Styled.Countries>
-          {countries.map(country => {
-            return (
-              <Country
-                selectedCountry={selectedCountry}
-                key={country.name}
-                flag={country.flag}
-                name={country.name}
-                population={country.population}
-                region={country.region}
-                capital={country.capital}
-              />
-            )
-          })}
-        </Styled.Countries>
-      )
-    } else if (array === filteredCountries) {
-      return (
-        <Styled.Countries>
-          {filteredCountries.map(country => {
-            return (
-              <Country
-                selectedCountry={selectedCountry}
-                key={country.name}
-                flag={country.flag}
-                name={country.name}
-                population={country.population}
-                region={country.region}
-                capital={country.capital}
-              />
-            )
-          })}
-        </Styled.Countries>
-      )
-    } else if (array === filteredRegion) {
-      return (
-        <Styled.Countries>
-          {filteredRegion.map(country => {
-            return (
-              <Country
-                selectedCountry={selectedCountry}
-                key={country.name}
-                flag={country.flag}
-                name={country.name}
-                population={country.population}
-                region={country.region}
-                capital={country.capital}
-              />
-            )
-          })}
-        </Styled.Countries>
-      )
+    // Let user type in the country name
+    const searchCountry = e => {
+      this.setState({
+        userInput: e.target.value
+      })
     }
-  }
 
-  // Destructure dark & light mode from colors
-  const { darkMode, lightMode } = colors
+    // Region selected by user
+    const selectedRegion = e => {
+      this.setState({
+        regionSelected: e.target.textContent
+      })
+    }
 
-  return (
-    <ThemeProvider theme={isLightMode ? lightMode : darkMode}>
-      <Router>
+    // A specific country selected by user
+    const selectedCountry = async e => {
+      e.preventDefault()
+      // e.persist()
+      console.log(countrySelected)
+      await this.setState({
+        countrySelected: e.target.nextSibling.textContent
+      })
+      console.log(countrySelected)
+    }
+
+    // Let user toggle between light & dark mode
+    const toggleTheme = () => {
+      this.setState({
+        isLightMode: !isLightMode
+      })
+      localStorage.setItem('isLightMode', !isLightMode)
+    }
+
+    // Find which countries are match with userInput
+    const filteredCountries = countries.filter(country => {
+      return country.name.toLowerCase().includes(userInput.toLowerCase())
+    })
+
+    // Return a new array with country filtered by region
+    const filteredRegion = countries.filter(country => {
+      return country.region.toLowerCase().includes(regionSelected.toLowerCase())
+    })
+
+    // Checking what countries to be displayed on screen
+    const renderedCountries = array => {
+      if (array === countries) {
+        return (
+          <Styled.Countries>
+            {countries.map(country => {
+              return (
+                <Country
+                  selectedCountry={selectedCountry}
+                  key={country.name}
+                  flag={country.flag}
+                  name={country.name}
+                  population={country.population}
+                  region={country.region}
+                  capital={country.capital}
+                />
+              )
+            })}
+          </Styled.Countries>
+        )
+      } else if (array === filteredCountries) {
+        return (
+          <Styled.Countries>
+            {filteredCountries.map(country => {
+              return (
+                <Country
+                  selectedCountry={selectedCountry}
+                  key={country.name}
+                  flag={country.flag}
+                  name={country.name}
+                  population={country.population}
+                  region={country.region}
+                  capital={country.capital}
+                />
+              )
+            })}
+          </Styled.Countries>
+        )
+      } else if (array === filteredRegion) {
+        return (
+          <Styled.Countries>
+            {filteredRegion.map(country => {
+              return (
+                <Country
+                  selectedCountry={selectedCountry}
+                  key={country.name}
+                  flag={country.flag}
+                  name={country.name}
+                  population={country.population}
+                  region={country.region}
+                  capital={country.capital}
+                />
+              )
+            })}
+          </Styled.Countries>
+        )
+      }
+    }
+
+    return (
+      <ThemeProvider theme={isLightMode ? lightMode : darkMode}>
         <div>
           <GlobalStyles />
           {isLightMode ? (
@@ -173,23 +179,16 @@ const App = () => {
           )}
           <SearchBar searchCountry={searchCountry} />
           <FilterRegion selectedRegion={selectedRegion} />
-          <Switch>
-            {userInput ? (
-              <Route>{renderedCountries(filteredCountries)}</Route>
-            ) : regionSelected ? (
-              <Route>{renderedCountries(filteredRegion)}</Route>
-            ) : countrySelected ? (
-              <Route>{renderedCountries(clickedCountry)}</Route>
-            ) : (
-              <Route exact path='/'>
-                {renderedCountries(countries)}
-              </Route>
-            )}
-          </Switch>
+          {userInput
+            ? renderedCountries(filteredCountries)
+            : regionSelected
+            ? renderedCountries(filteredRegion)
+            : countrySelected
+            ? renderedCountries(countrySelected)
+            : renderedCountries(countries)}
         </div>
-      </Router>
-    </ThemeProvider>
-  )
+      </ThemeProvider>
+    )
+  }
 }
-
 export default App
