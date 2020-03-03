@@ -23,6 +23,8 @@ const App = () => {
     localData === 'true' ? true : false
   )
 
+  // hello there
+
   // Save all countries in the array
   const [countries, setCountries] = useState([])
 
