@@ -45,6 +45,10 @@ class App extends React.Component {
       .catch(error => console.error(error))
   }
 
+  componentDidUpdate() {
+    console.log(this.state)
+  }
+
   render() {
     // Destructure states
     const {
@@ -74,7 +78,7 @@ class App extends React.Component {
 
     // A specific country selected by user
     const selectedCountry = e => {
-      console.log('changing state')
+      // console.log('changing state')
       this.setState(
         {
           countrySelected: e.target.nextSibling.textContent
@@ -101,6 +105,10 @@ class App extends React.Component {
     // Return a new array with country filtered by region
     const filteredRegion = countries.filter(country => {
       return country.region.toLowerCase().includes(regionSelected.toLowerCase())
+    })
+
+    const filteredSelectedCountry = countries.filter(country => {
+      return country.name.toLowerCase().includes(countrySelected.toLowerCase())
     })
 
     // Checking what countries to be displayed on screen
@@ -159,6 +167,24 @@ class App extends React.Component {
             })}
           </Styled.Countries>
         )
+      } else if (array === filteredSelectedCountry) {
+        return (
+          <Styled.Countries>
+            {filteredSelectedCountry.map(country => {
+              return (
+                <Country
+                  selectedCountry={selectedCountry}
+                  key={country.name}
+                  flag={country.flag}
+                  name={country.name}
+                  population={country.population}
+                  region={country.region}
+                  capital={country.capital}
+                />
+              )
+            })}
+          </Styled.Countries>
+        )
       }
     }
 
@@ -184,9 +210,9 @@ class App extends React.Component {
           {userInput
             ? renderedCountries(filteredCountries)
             : regionSelected
-            ? countrySelected
-            : renderedCountries(countrySelected)
             ? renderedCountries(filteredRegion)
+            : countrySelected
+            ? renderedCountries(filteredSelectedCountry)
             : renderedCountries(countries)}
         </div>
       </ThemeProvider>
