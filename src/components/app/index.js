@@ -16,7 +16,7 @@ import SearchBar from '../searchBar'
 import FilterRegion from '../filterRegion'
 import Country from '../country'
 import BackButton from '../backButton'
-
+import CountryDetail from '../countryDetail'
 class App extends React.Component {
   state = {
     countries: [],
@@ -208,6 +208,7 @@ class App extends React.Component {
           )}
           <SearchBar searchCountry={searchCountry} />
           <BackButton />
+          <CountryDetail />
           <FilterRegion selectedRegion={selectedRegion} />
           {userInput
             ? renderedCountries(filteredCountries)

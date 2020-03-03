@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import * as Styled from './styles'
 
-const BackButton = () => {
+const BackButton = ({ handleClick }) => {
   return (
-    <Styled.Button>
+    <Styled.Button onClick={handleClick}>
       <FontAwesomeIcon icon='arrow-left' className='icon' />
       <Styled.Text>Back</Styled.Text>
     </Styled.Button>
