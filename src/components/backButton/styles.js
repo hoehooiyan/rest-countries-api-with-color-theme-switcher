@@ -10,7 +10,7 @@ export const Button = styled.button`
   box-shadow: 0 0 7px rgba(0, 0, 0, 2.9);
   color: ${props => props.theme.text};
   cursor: pointer;
-  margin: 4rem 2.8rem 6.4rem 2.8rem;
+  margin: 4rem 0 6.4rem 0;
   outline: none;
   padding: 0.7rem 2.4rem 0.6rem 2.45rem;
 

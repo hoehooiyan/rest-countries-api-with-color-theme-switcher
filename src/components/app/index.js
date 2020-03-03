@@ -170,21 +170,27 @@ class App extends React.Component {
         )
       } else if (array === filteredSelectedCountry) {
         return (
-          <Styled.Countries>
+          <Styled.SelectedCountry>
+            <BackButton />
             {filteredSelectedCountry.map(country => {
               return (
-                <Country
-                  selectedCountry={selectedCountry}
+                <CountryDetail
                   key={country.name}
                   flag={country.flag}
                   name={country.name}
+                  nativeName={country.nativeName}
                   population={country.population}
                   region={country.region}
+                  subRegion={country.subregion}
                   capital={country.capital}
+                  topLevelDomain={country.topLevelDomain}
+                  currencies={country.currencies.map(currency => currency.name)}
+                  languages={country.languages.map(language => language.name)}
+                  borders={country.borders}
                 />
               )
             })}
-          </Styled.Countries>
+          </Styled.SelectedCountry>
         )
       }
     }
@@ -207,8 +213,8 @@ class App extends React.Component {
             />
           )}
           <SearchBar searchCountry={searchCountry} />
-          <BackButton />
-          <CountryDetail />
+          {/* <BackButton />
+          <CountryDetail /> */}
           <FilterRegion selectedRegion={selectedRegion} />
           {userInput
             ? renderedCountries(filteredCountries)

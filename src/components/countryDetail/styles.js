@@ -5,11 +5,10 @@ import typography from '../../styles/Typography'
 export const CountryDetail = styled.main`
   display: flex;
   flex-direction: column;
-  border: 1px solid black;
-  margin: 0 2.7rem 4.4rem 2.8rem;
+  /* margin: 0 2.7rem 4.4rem 2.8rem; */
+  /* margin: 0 auto 4.4rem auto; */
 `
 export const Flag = styled.img`
-  border: 1px solid red;
   height: 22.9rem;
   width: 32rem;
 `
@@ -53,6 +52,18 @@ export const Item = styled.li`
 
 export const ActualData = styled.span`
   font-weight: ${typography.fontWeight.light};
+/* 
+  &.currencies {
+    &::after {
+      content: ',';
+    }
+  }
+
+  &.languages {
+    &::after {
+      content: ',';
+    }
+  } */
 `
 
 export const TertiaryContainer = styled.div`

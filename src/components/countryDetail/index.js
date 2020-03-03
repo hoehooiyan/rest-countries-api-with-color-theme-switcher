@@ -1,7 +1,7 @@
 import React from 'react'
 
 import * as Styled from './styles'
-// import addComma from '../../utils/addComma'
+import addComma from '../../utils/addComma'
 
 const CountryDetail = ({
   flag,
@@ -13,47 +13,48 @@ const CountryDetail = ({
   capital,
   topLevelDomain,
   currencies,
-  languages
+  languages,
+  borders
 }) => {
   return (
     <Styled.CountryDetail>
       <Styled.Flag src={flag} alt={name} />
       <Styled.MainContainer>
-        <Styled.Name>{name}Belgium</Styled.Name>
+        <Styled.Name>{name}</Styled.Name>
         <Styled.SecondaryContainer>
           <Styled.Group>
             <Styled.Item>
-              Native Name:{' '}
-              <Styled.ActualData>{nativeName}Belgie</Styled.ActualData>
+              Native Name: <Styled.ActualData>{nativeName}</Styled.ActualData>
             </Styled.Item>
             <Styled.Item>
               Population:{' '}
-              <Styled.ActualData>{population}11,319,511</Styled.ActualData>
+              <Styled.ActualData>{addComma(population)}</Styled.ActualData>
             </Styled.Item>
             <Styled.Item>
-              Region: <Styled.ActualData>{region}Europe</Styled.ActualData>
+              Region: <Styled.ActualData>{region}</Styled.ActualData>
             </Styled.Item>
             <Styled.Item>
-              Sub Region:{' '}
-              <Styled.ActualData>{subRegion}Western Europe</Styled.ActualData>
+              Sub Region: <Styled.ActualData>{subRegion}</Styled.ActualData>
             </Styled.Item>
             <Styled.Item>
-              Capital: <Styled.ActualData>{capital}Brussels</Styled.ActualData>
+              Capital: <Styled.ActualData>{capital}</Styled.ActualData>
             </Styled.Item>
           </Styled.Group>
           <Styled.Group>
             <Styled.Item>
               Top Level Domain:{' '}
-              <Styled.ActualData>{topLevelDomain}.be</Styled.ActualData>
+              <Styled.ActualData>{topLevelDomain}</Styled.ActualData>
             </Styled.Item>
             <Styled.Item>
               Currrencies:{' '}
-              <Styled.ActualData>{currencies}Euro</Styled.ActualData>
+              <Styled.ActualData className='currencies'>
+                {currencies}
+              </Styled.ActualData>
             </Styled.Item>
             <Styled.Item>
               Languages:{' '}
-              <Styled.ActualData>
-                {languages}Dutch, French, German
+              <Styled.ActualData className='languages'>
+                {languages}
               </Styled.ActualData>
             </Styled.Item>
           </Styled.Group>
@@ -61,9 +62,9 @@ const CountryDetail = ({
         <Styled.TertiaryContainer>
           <Styled.Title>Border Countries: </Styled.Title>
           <Styled.BorderCountries>
-            <Styled.SingleCountry>France</Styled.SingleCountry>
-            <Styled.SingleCountry>Germany</Styled.SingleCountry>
-            <Styled.SingleCountry>Netherlands</Styled.SingleCountry>
+            {borders.map(border => {
+              return <Styled.SingleCountry>{border}</Styled.SingleCountry>
+            })}
           </Styled.BorderCountries>
         </Styled.TertiaryContainer>
       </Styled.MainContainer>
