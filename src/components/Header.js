@@ -6,10 +6,19 @@ import styled from 'styled-components'
 const StyledOuterContainer = styled.div`
   background-color: ${(props) => props.theme.element};
   box-shadow: var(--shadow);
+  margin-bottom: 2.4rem;
   width: 100%;
   position: sticky;
   top: 0;
   z-index: 100;
+
+  @media screen and (min-width: 768px) {
+    margin-bottom: 3.4rem;
+  }
+
+  @media screen and (min-width: 992px) {
+    margin-bottom: 4.8rem;
+  }
 `
 
 const StyledHeader = styled.header`
@@ -21,6 +30,10 @@ const StyledHeader = styled.header`
   max-width: var(--xl);
   width: 100%;
   padding: 3rem 1.6rem;
+
+  @media screen and (min-width: 480px) {
+    padding: 2.5rem 2rem;
+  }
 
   @media screen and (min-width: 768px) {
     padding: 2.5rem 4rem;
@@ -37,11 +50,15 @@ const StyledHeader = styled.header`
 
 const StyledSiteTitle = styled.h1`
   color: ${(props) => props.theme.text};
-  font-size: var(--smallFont);
+  font-size: var(--smFont);
   font-weight: var(--extra);
 
+  @media screen and (min-width: 480px) {
+    font-size: var(--mdFont);
+  }
+
   @media screen and (min-width: 768px) {
-    font-size: 2.4rem;
+    font-size: var(--xlFont);
   }
 `
 
@@ -57,11 +74,15 @@ const StyledModeToggler = styled.div`
 `
 
 export const StyledModeText = styled.p`
-  font-size: 1.2rem;
+  font-size: var(--xsFont);
   font-weight: var(--semi);
 
+  @media screen and (min-width: 480px) {
+    font-size: var(--smFont);
+  }
+
   @media screen and (min-width: 768px) {
-    font-size: 1.6rem;
+    font-size: var(--mdFont);
   }
 `
 
