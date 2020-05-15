@@ -1,9 +1,25 @@
 import { createGlobalStyle } from 'styled-components'
 
-import breakpoints from './Breakpoints'
-import typography from './Typography'
-
 export default createGlobalStyle`
+  :root {
+    /* TYPOGRAPHY */
+    --font: 'Nunito Sans', sans-serif;
+    --smallFont: 1.4rem;
+    --regularFont: 1.6rem;
+    --light: 300;
+    --normal: 400;
+    --semi: 600;
+    --extra: 800;
+
+    /* BREAKPOINT */
+    --xs: 375px;
+    --sm: 480px;
+    --md: 768px;
+    --lg: 992px;
+    --xl: 1440px;
+  }
+
+  /* CSS RESET */
   *, *::before, *::after {
     margin: 0;
     padding: 0;
@@ -16,10 +32,10 @@ export default createGlobalStyle`
   }
 
   body {
-    background-color: ${props => props.theme.background};
-    font-family: ${typography.primaryFont};
-    font-size: ${typography.fontSize.homepageItem};
+    background-color: ${(props) => props.theme.background};
+    font-family: var(--font);
+    font-size: var(--regular-font);
     margin: 0 auto;
-    max-width: ${breakpoints.largeDesktop};
+    max-width: var(--xl);
   }
 `
