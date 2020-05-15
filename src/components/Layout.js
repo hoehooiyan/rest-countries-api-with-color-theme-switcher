@@ -30,7 +30,7 @@ const Layout = ({ children }) => {
     const localData = localStorage.getItem('isLightMode')
 
     // check if the localStorage is available
-    localData === 'true' ? setTheme(false) : setTheme(true)
+    localData === true ? setTheme(false) : setTheme(true)
   }, [])
 
   const toggleTheme = () => {
