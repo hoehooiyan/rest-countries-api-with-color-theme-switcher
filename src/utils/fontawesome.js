@@ -6,6 +6,15 @@ import {
   faSearch,
   faChevronDown,
   faChevronUp,
-  faArrowLeft
+  faArrowLeft,
+  faArrowRight,
 } from '@fortawesome/free-solid-svg-icons'
-library.add(faMoon, faSun, faSearch, faChevronDown, faChevronUp, faArrowLeft)
+library.add(
+  faMoon,
+  faSun,
+  faSearch,
+  faChevronDown,
+  faChevronUp,
+  faArrowLeft,
+  faArrowRight
+)
