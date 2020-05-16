@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components'
 
-export default createGlobalStyle`
+const GlobalStyles = createGlobalStyle`
   :root {
     /* TYPOGRAPHY */
     --font: 'Nunito Sans', sans-serif;
@@ -45,3 +45,5 @@ export default createGlobalStyle`
     margin: 0 auto;
   }
 `
+
+export default GlobalStyles
