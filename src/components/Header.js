@@ -16,7 +16,7 @@ const StyledOuterContainer = styled.div`
     margin-bottom: 3.4rem;
   }
 
-  @media screen and (min-width: 992px) {
+  @media screen and (min-width: 1440px) {
     margin-bottom: 4.8rem;
   }
 `
@@ -35,7 +35,7 @@ const StyledHeader = styled.header`
     padding: 2.5rem 2rem;
   }
 
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 992px) {
     padding: 2.5rem 4rem;
   }
 

@@ -24,8 +24,12 @@ export const StyledTopContainer = styled.div`
   padding: 1.6rem 1.9rem 1.6rem 2.4rem;
   width: 20rem;
 
-  @media screen and (min-width: 768px) {
-    margin: 0 4rem 0.4rem 1.6rem;
+  @media screen and (min-width: 650px) {
+    margin: 0 1.6rem 0.4rem 1.6rem;
+  }
+
+  @media screen and (min-width: 992px) {
+    margin-right: 4rem;
   }
 
   @media screen and (min-width: 1440px) {

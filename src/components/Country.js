@@ -1,0 +1,97 @@
+import React from 'react'
+import addComma from '../utils/addComma'
+import styled from 'styled-components'
+
+const StyledCountry = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  background-color: ${(props) => props.theme.element};
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  color: ${(props) => props.theme.text};
+  margin-top: 4rem;
+  width: 264px;
+
+  @media screen and (min-width: 600px) {
+    align-self: stretch;
+  }
+
+  @media screen and (min-width: 650px) {
+    &:nth-child(odd) {
+      margin-right: 6rem;
+    }
+  }
+
+  @media screen and (min-width: 850px) {
+    &:nth-child(odd) {
+      margin-right: 8rem;
+    }
+  }
+
+  @media screen and (min-width: 900px) {
+    &:nth-child(odd) {
+      margin-right: 0;
+    }
+  }
+`
+
+const StyledFlag = styled.img`
+  border-top-left-radius: var(--radius);
+  border-top-right-radius: var(--radius);
+  cursor: pointer;
+  height: 160px;
+  width: 100%;
+  object-fit: cover;
+`
+
+const StyledName = styled.h2`
+  font-size: var(--lgFont);
+  font-weight: var(--extra);
+  margin: 2.5rem 2.4rem 1.9rem 2.4rem;
+`
+const StyledMetadata = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 6.7rem;
+  margin: 0 2.4rem 4.1rem 2.4rem;
+`
+
+const StyledInfo = styled.p`
+  font-weight: var(--semi);
+`
+
+const StyledActualData = styled.span`
+  font-weight: var(--light);
+`
+
+const Country = ({
+  selectedCountry,
+  flag,
+  name,
+  population,
+  region,
+  capital,
+}) => {
+  return (
+    <StyledCountry onClick={selectedCountry}>
+      <StyledFlag src={flag} alt={name} />
+      <StyledName id='country-name'>{name}</StyledName>
+      <StyledMetadata>
+        <StyledInfo>
+          Population:
+          <StyledActualData> {addComma(population)}</StyledActualData>
+        </StyledInfo>
+        <StyledInfo>
+          Region: <StyledActualData>{region}</StyledActualData>
+        </StyledInfo>
+        <StyledInfo>
+          Capital: <StyledActualData>{capital}</StyledActualData>
+        </StyledInfo>
+      </StyledMetadata>
+    </StyledCountry>
+  )
+}
+
+export default Country
