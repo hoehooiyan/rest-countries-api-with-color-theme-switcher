@@ -5,7 +5,7 @@ const StyledCountryWrapper = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 auto 6.5rem;
+  margin: 0 auto;
   max-width: var(--xl);
   padding: 0 1.6rem;
   width: 100%;
@@ -28,8 +28,9 @@ const StyledCountryWrapper = styled.main`
     padding: 0 4rem;
   }
 
-  @media screen and (min-width: 1440px) {
+  @media screen and (min-width: 1400px) {
     justify-content: space-between;
+    margin-top: 4.8rem;
     padding: 0 8rem;
   }
 `

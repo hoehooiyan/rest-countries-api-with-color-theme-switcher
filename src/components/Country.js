@@ -34,6 +34,11 @@ const StyledCountry = styled.div`
       margin-right: 0;
     }
   }
+
+  @media screen and (min-width: 1400px) {
+    margin-top: 0;
+    margin-bottom: 7.5rem;
+  }
 `
 
 const StyledFlag = styled.img`
