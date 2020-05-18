@@ -23,14 +23,14 @@ const StyledContent = styled.div`
 
 const Layout = ({ children }) => {
   const { darkMode, lightMode } = colors
-  const [isLightMode, setTheme] = useState(true)
+  const [isLightMode, setTheme] = useState(false)
 
   useEffect(() => {
     // implement localStorage to persist user selected theme
     const localData = localStorage.getItem('isLightMode')
 
     // check if the localStorage is available
-    localData === true ? setTheme(false) : setTheme(true)
+    localData === true ? setTheme(true) : setTheme(false)
   }, [])
 
   const toggleTheme = () => {
