@@ -7,12 +7,13 @@ const Spin = keyframes`
 `
 
 const StyledLoader = styled.div`
+  animation: ${Spin} 0.8s linear infinite;
   border: 10px solid ${(props) => props.theme.background};
   border-radius: 50%;
   border-top: 10px solid ${(props) => props.theme.text};
   width: 80px;
   height: 80px;
-  animation: ${Spin} 0.8s linear infinite;
+  margin: 8rem auto;
 `
 
 const Loader = () => {
