@@ -28,7 +28,7 @@ const StyledCountryWrapper = styled.main`
     padding: 0 4rem;
   }
 
-  @media screen and (min-width: 1400px) {
+  @media screen and (min-width: 1280px) {
     justify-content: space-between;
     margin-top: 4.8rem;
     padding: 0 8rem;

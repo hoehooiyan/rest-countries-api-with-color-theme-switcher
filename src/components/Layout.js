@@ -3,7 +3,7 @@ import styled, { ThemeProvider } from 'styled-components'
 
 import Header from './Header'
 import Footer from './Footer'
-import GlobalStyles from '../styles/globalStyles'
+import GlobalStyles from '../styles/index'
 import colors from '../styles/colors'
 import '../utils/fontawesome'
 

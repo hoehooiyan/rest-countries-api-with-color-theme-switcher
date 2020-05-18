@@ -9,7 +9,7 @@ const StyledText = styled.p`
   color: ${(props) => props.theme.text};
   font-size: var(--xsFont);
   font-weight: var(--extra);
-  margin: 2rem;
+  margin: 8rem auto 2rem;
   text-align: center;
   text-transform: lowercase;
 

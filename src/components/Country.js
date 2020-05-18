@@ -35,7 +35,7 @@ const StyledCountry = styled.div`
     }
   }
 
-  @media screen and (min-width: 1400px) {
+  @media screen and (min-width: 1280px) {
     margin-top: 0;
     margin-bottom: 7.5rem;
   }
