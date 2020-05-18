@@ -2,6 +2,45 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
 
+export const StyledPaginationContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 4rem auto 0;
+  padding: 0 1.6rem;
+  max-width: var(--xl);
+
+  @media screen and (min-width: 1440px) {
+    margin-top: 0;
+  }
+`
+
+export const StyledNavigateButton = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 60%;
+
+  @media screen and (min-width: 400px) {
+    width: 50%;
+  }
+
+  @media screen and (min-width: 600px) {
+    width: 40%;
+  }
+
+  @media screen and (min-width: 700px) {
+    width: 30%;
+  }
+
+  @media screen and (min-width: 900px) {
+    width: 25%;
+  }
+
+  @media screen and (min-width: 1200px) {
+    width: 15%;
+  }
+`
+
 const StyledShowCurrent = styled.p`
   border-bottom: 1px dotted ${(props) => props.theme.text};
   color: ${(props) => props.theme.text};

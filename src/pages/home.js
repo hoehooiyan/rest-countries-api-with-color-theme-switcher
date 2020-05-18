@@ -7,7 +7,13 @@ import SearchBar from '../components/SearchBar'
 import FilterRegion from '../components/FilterRegion'
 import CountryContainer from '../components/CountryContainer'
 import Country from '../components/Country'
-import { ShowCurrent, NextPage, PreviousPage } from '../components/Pagination'
+import {
+  StyledPaginationContainer,
+  StyledNavigateButton,
+  ShowCurrent,
+  NextPage,
+  PreviousPage,
+} from '../components/Pagination'
 import api from '../api'
 
 const StyledOuterContainer = styled.div`
@@ -24,45 +30,6 @@ const StyledContainer = styled.div`
     flex-direction: row;
     justify-content: space-between;
     margin: 0 auto;
-  }
-`
-
-const StyledPaginationContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 4rem auto 0;
-  padding: 0 1.6rem;
-  max-width: var(--xl);
-
-  @media screen and (min-width: 1440px) {
-    margin-top: 0;
-  }
-`
-
-const StyledNavigateButton = styled.div`
-  display: flex;
-  justify-content: space-around;
-  width: 60%;
-
-  @media screen and (min-width: 400px) {
-    width: 50%;
-  }
-
-  @media screen and (min-width: 600px) {
-    width: 40%;
-  }
-
-  @media screen and (min-width: 700px) {
-    width: 30%;
-  }
-
-  @media screen and (min-width: 900px) {
-    width: 25%;
-  }
-
-  @media screen and (min-width: 1200px) {
-    width: 15%;
   }
 `
 
