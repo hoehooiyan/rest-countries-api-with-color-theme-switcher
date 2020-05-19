@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import styled from 'styled-components'
 
 import Layout from '../components/Layout'
@@ -36,6 +36,7 @@ const StyledContainer = styled.div`
 const Home = () => {
   const [countries, setCountries] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
+  const [searchedCountries, setSearchedCountries] = useState(null)
 
   /**
    * @reference: Pagination in React
@@ -77,7 +78,21 @@ const Home = () => {
     setCurrentPage(currentPage - 1)
   }
 
-  // ?fields=flag;name;population;region;capital;nativeName;subRegion;topLevelDomain;currencies;languages;borders
+  const searchCountry = (e) => {
+    if (e.target.value !== '' && countries.length !== 0) {
+      setSearchedCountries(
+        countries.filter((country) => {
+          return country.name
+            .toLowerCase()
+            .includes(e.target.value.toLowerCase())
+        })
+      )
+    }
+  }
+
+  const filterCountry = (e) => {
+    console.log('filtering')
+  }
 
   // make an api call to get all the countries data
   useEffect(() => {
@@ -93,14 +108,14 @@ const Home = () => {
     <Layout>
       <StyledOuterContainer>
         <StyledContainer>
-          <SearchBar />
-          <FilterRegion />
+          <SearchBar searchCountry={searchCountry} />
+          <FilterRegion selectedRegion={filterCountry} />
         </StyledContainer>
 
         <CountryContainer>
           {countries.length === 0 && <Loader />}
           {countries.length !== 0 && renderCountries}
-          {/* {countries.length !== 0 && console.log(countries)} */}
+          {/* {countries.length !== 0 && console.log('all countries: ', countries)} */}
         </CountryContainer>
 
         {countries.length !== 0 && (
