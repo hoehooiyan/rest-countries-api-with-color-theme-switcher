@@ -1,6 +1,7 @@
 import React from 'react'
 import addComma from '../utils/addComma'
 import styled from 'styled-components'
+import LoadingImg from '../images/loading.gif'
 
 const StyledCountry = styled.div`
   display: flex;
@@ -10,6 +11,7 @@ const StyledCountry = styled.div`
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   color: ${(props) => props.theme.text};
+  cursor: pointer;
   margin-top: 4rem;
   width: 264px;
 
@@ -41,10 +43,19 @@ const StyledCountry = styled.div`
   }
 `
 
+const StyledImgContainer = styled.div`
+  background-image: url(${LoadingImg});
+  border-top-left-radius: var(--radius);
+  border-top-right-radius: var(--radius);
+  height: 160px;
+  width: 100%;
+  background-position: center;
+  background-size: contain;
+`
+
 const StyledFlag = styled.img`
   border-top-left-radius: var(--radius);
   border-top-right-radius: var(--radius);
-  cursor: pointer;
   height: 160px;
   width: 100%;
   object-fit: cover;
@@ -78,10 +89,13 @@ const Country = ({
   population,
   region,
   capital,
+  style,
 }) => {
   return (
     <StyledCountry onClick={selectedCountry}>
-      <StyledFlag src={flag} alt={name} />
+      <StyledImgContainer>
+        <StyledFlag src={flag} alt={name} />
+      </StyledImgContainer>
       <StyledName id='country-name'>{name}</StyledName>
       <StyledMetadata>
         <StyledInfo>
