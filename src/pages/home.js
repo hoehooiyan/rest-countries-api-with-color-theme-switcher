@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import Layout from '../components/Layout'
@@ -35,28 +35,42 @@ const StyledContainer = styled.div`
 
 const Home = () => {
   const [countries, setCountries] = useState([])
-  const [currentPage, setCurrentPage] = useState(1)
-  const [searchedCountries, setSearchedCountries] = useState(null)
+  const [userInput, setUserInput] = useState('')
+  const [searchedCountries, setSearchedCountries] = useState([])
+  const [regionSelection, setRegionSelection] = useState('')
+  const [filteredCountries, setFilteredCountries] = useState([])
+  // const [currentPage, setCurrentPage] = useState(1)
+  // const [pagination, setPagination] = useState({
+  //   itemPerPage: 8,
+  //   currentPage: 1,
+  //   firstPage: 1,
+  //   lastPage: 0,
+  //   totalPage: 0,
+  // })
+
+  // const indexOfLastCountry = pagination.currentPage * pagination.itemPerPage
+  // const indexOfFirstCountry = indexOfLastCountry - pagination.itemPerPage
 
   /**
    * @reference: Pagination in React
    * https://codepen.io/PiotrBerebecki/pen/pEYPbY?editors=0010
    */
-  const countryPerPage = 8
-  const totalPages = Math.ceil(countries.length / countryPerPage)
-  const isFirst = 1
-  const isLast = totalPages
+  // const countryPerPage = 8
+  // const totalPages = Math.ceil(countries.length / countryPerPage)
+  // const isFirst = 1
+  // const isLast = totalPages
 
   // logic for displaying current countries
-  const indexOfLastCountry = currentPage * countryPerPage
-  const indexOfFirstCountry = indexOfLastCountry - countryPerPage
-  const currentCountries = countries.slice(
-    indexOfFirstCountry,
-    indexOfLastCountry
-  )
+  // const indexOfLastCountry = pagination.currentPage * pagination.itemPerPage
+  // const indexOfFirstCountry = indexOfLastCountry - pagination.itemPerPage
+  // const currentCountries = countries.slice(
+  //   indexOfFirstCountry,
+  //   indexOfLastCountry
+  // )
 
-  const renderCountries = currentCountries.map(
-    ({ flag, name, population, region, capital }, i) => {
+  const renderit = (arr) => {
+    return arr.map((item, i) => {
+      const { flag, name, population, region, capital } = item
       return (
         <Country
           key={i}
@@ -67,32 +81,44 @@ const Home = () => {
           capital={capital}
         />
       )
-    }
-  )
-
-  const handleNextPage = () => {
-    setCurrentPage(currentPage + 1)
+    })
   }
 
-  const handlePreviousPage = () => {
-    setCurrentPage(currentPage - 1)
-  }
+  // const handleNextPage = () => {
+  //   setPagination(pagination.currentPage + 1)
+  // }
+
+  // const handlePreviousPage = () => {
+  //   setPagination(pagination.currentPage - 1)
+  // }
 
   const searchCountry = (e) => {
-    if (e.target.value !== '' && countries.length !== 0) {
+    setUserInput(e.target.value.toLowerCase())
+  }
+
+  useEffect(() => {
+    if (userInput !== '' && countries.length !== 0) {
       setSearchedCountries(
-        countries.filter((country) => {
-          return country.name
-            .toLowerCase()
-            .includes(e.target.value.toLowerCase())
+        countries.filter(({ name }) => {
+          return name.toLowerCase().includes(userInput)
         })
       )
     }
-  }
+  }, [countries, userInput])
 
   const filterCountry = (e) => {
-    console.log('filtering')
+    setRegionSelection(e.target.textContent.toLowerCase())
   }
+
+  useEffect(() => {
+    if (regionSelection !== '' && countries.length !== 0) {
+      setFilteredCountries(
+        countries.filter(({ region }) => {
+          return region.toLowerCase() === regionSelection
+        })
+      )
+    }
+  }, [countries, regionSelection])
 
   // make an api call to get all the countries data
   useEffect(() => {
@@ -100,6 +126,8 @@ const Home = () => {
       .then((response) => {
         const { data } = response
         setCountries(data)
+        // setSearchedCountries(data)
+        // setFilteredCountries(data)
       })
       .catch((error) => console.error(error))
   }, [])
@@ -114,23 +142,31 @@ const Home = () => {
 
         <CountryContainer>
           {countries.length === 0 && <Loader />}
-          {countries.length !== 0 && renderCountries}
-          {/* {countries.length !== 0 && console.log('all countries: ', countries)} */}
+        </CountryContainer>
+        <CountryContainer>
+          {countries.length !== 0 && userInput
+            ? renderit(searchedCountries)
+            : regionSelection
+            ? renderit(filteredCountries)
+            : renderit(countries)}
         </CountryContainer>
 
-        {countries.length !== 0 && (
+        {/* {countries.length !== 0 && (
           <StyledPaginationContainer>
-            <ShowCurrent current={currentPage} total={totalPages} />
+            <ShowCurrent
+              current={pagination.currentPage}
+              total={pagination.totalPage}
+            />
             <StyledNavigateButton>
-              {currentPage === isFirst ? null : (
+              {pagination.currentPage === pagination.firstPage ? null : (
                 <PreviousPage handlePreviousPage={handlePreviousPage} />
               )}
-              {currentPage === isLast ? null : (
+              {pagination.currentPage === pagination.lastPage ? null : (
                 <NextPage handleNextPage={handleNextPage} />
               )}
             </StyledNavigateButton>
           </StyledPaginationContainer>
-        )}
+        )} */}
       </StyledOuterContainer>
     </Layout>
   )
