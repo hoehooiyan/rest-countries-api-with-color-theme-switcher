@@ -1,9 +1,10 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import addComma from '../utils/addComma'
 import styled from 'styled-components'
 import LoadingImg from '../images/loading.gif'
 
-const StyledCountry = styled.div`
+const StyledCountry = styled(Link)`
   display: flex;
   flex-direction: column;
   align-self: center;
@@ -13,7 +14,9 @@ const StyledCountry = styled.div`
   color: ${(props) => props.theme.text};
   cursor: pointer;
   margin-top: 4rem;
+  text-decoration: none;
   width: 264px;
+  transition: transform 0.35s;
 
   @media screen and (min-width: 600px) {
     align-self: stretch;
@@ -40,6 +43,10 @@ const StyledCountry = styled.div`
   @media screen and (min-width: 1280px) {
     margin-top: 0;
     margin-bottom: 7.5rem;
+  }
+
+  &:hover {
+    transform: translateY(-6px);
   }
 `
 
@@ -82,17 +89,11 @@ const StyledActualData = styled.span`
   font-weight: var(--light);
 `
 
-const Country = ({
-  selectedCountry,
-  flag,
-  name,
-  population,
-  region,
-  capital,
-  style,
-}) => {
+const Country = ({ flag, name, population, region, capital }) => {
+  const linkTo = name.replace(/\s+/g, '-').toLowerCase()
+
   return (
-    <StyledCountry onClick={selectedCountry}>
+    <StyledCountry to={`/${linkTo}`}>
       <StyledImgContainer>
         <StyledFlag src={flag} alt={name} />
       </StyledImgContainer>

@@ -126,8 +126,8 @@ const Home = () => {
       .then((response) => {
         const { data } = response
         setCountries(data)
-        // setSearchedCountries(data)
-        // setFilteredCountries(data)
+        setSearchedCountries(data)
+        setFilteredCountries(data)
       })
       .catch((error) => console.error(error))
   }, [])

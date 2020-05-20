@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import addComma from '../utils/addComma'
+import api from '../api'
 
 export const StyledCountryDetail = styled.main`
   display: flex;
@@ -99,21 +100,56 @@ export const StyledSingleCountry = styled.button`
   } */
 `
 
-const CountryDetail = ({
-  flag,
-  name,
-  nativeName,
-  population,
-  region,
-  subRegion,
-  capital,
-  topLevelDomain,
-  currencies,
-  languages,
-  borders,
-}) => {
+const CountryDetail = ({ match }) => {
+  const country = match.params.country.replace(/-/g, ' ')
+  const [details, setDetails] = useState({
+    alpha3Code: '',
+    name: '',
+    nativeName: '',
+    population: 0,
+    region: '',
+    subregion: '',
+    capital: '',
+    topLevelDomain: [],
+    currencies: [],
+    languages: [],
+    flag: '',
+    borders: [],
+  })
+
+  useEffect(() => {
+    api(`/name/${country}?fullText=true`).then((response) => {
+      const { data } = response
+      setDetails(data[0])
+    })
+  }, [country])
+
+  const {
+    alpha3Code,
+    name,
+    nativeName,
+    population,
+    region,
+    subregion,
+    capital,
+    topLevelDomain, //array
+    currencies, //array // .name
+    languages, //array
+    flag,
+    borders, //array
+  } = details
+
+  console.log(nativeName, region, borders)
+  console.log(details)
+
   return (
     <StyledCountryDetail>
+      {/* <div>
+        {languages.map((border) => {
+          return <p>{border.name}</p>
+        })}
+      </div>
+      <h1>hello world</h1> */}
       <StyledFlag src={flag} alt={name} />
       <StyledMainContainer>
         <StyledName>{name}</StyledName>
@@ -130,7 +166,7 @@ const CountryDetail = ({
               Region: <StyledActualData>{region}</StyledActualData>
             </StyledItem>
             <StyledItem>
-              Sub Region: <StyledActualData>{subRegion}</StyledActualData>
+              Sub Region: <StyledActualData>{subregion}</StyledActualData>
             </StyledItem>
             <StyledItem>
               Capital: <StyledActualData>{capital}</StyledActualData>
@@ -144,13 +180,17 @@ const CountryDetail = ({
             <StyledItem>
               Currrencies:{' '}
               <StyledActualData className='currencies'>
-                {currencies}
+                {currencies.map((currency) => {
+                  return <p key={currency.name}>{currency.name}</p>
+                })}
               </StyledActualData>
             </StyledItem>
             <StyledItem>
               Languages:{' '}
               <StyledActualData className='languages'>
-                {languages}
+                {languages.map((language) => {
+                  return <p key={language.name}>{language.name}</p>
+                })}
               </StyledActualData>
             </StyledItem>
           </StyledGroup>
