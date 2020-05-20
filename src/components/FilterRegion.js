@@ -77,8 +77,6 @@ const FilterRegion = ({ selectedRegion }) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const toggleDropdown = (e) => {
-    const toggler = document.querySelector('.icon')
-
     setIsOpen(!isOpen)
   }
 
@@ -94,7 +92,7 @@ const FilterRegion = ({ selectedRegion }) => {
       {!isOpen ? null : (
         <StyledDropdown>
           <StyledRegion onClick={selectedRegion}>Africa</StyledRegion>
-          <StyledRegion onClick={selectedRegion}>America</StyledRegion>
+          <StyledRegion onClick={selectedRegion}>Americas</StyledRegion>
           <StyledRegion onClick={selectedRegion}>Asia</StyledRegion>
           <StyledRegion onClick={selectedRegion}>Europe</StyledRegion>
           <StyledRegion onClick={selectedRegion}>Oceania</StyledRegion>
