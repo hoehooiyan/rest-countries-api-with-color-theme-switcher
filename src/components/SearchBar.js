@@ -72,6 +72,8 @@ const SearchBar = ({ searchCountry }) => {
     <StyledSearchBar onSubmit={handleSubmit}>
       <FontAwesomeIcon icon='search' className='icon' />
       <StyledInput
+        aria-label='search for a country'
+        name='search'
         placeholder='Search for a country...'
         onChange={searchCountry}
       />
