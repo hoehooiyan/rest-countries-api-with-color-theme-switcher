@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import addComma from '../utils/addComma'
 import api from '../api'
@@ -85,7 +86,7 @@ export const StyledBorderCountries = styled.div`
   grid-template-columns: repeat(3, 1fr);
 `
 
-export const StyledSingleCountry = styled.button`
+export const StyledSingleCountry = styled(Link)`
   background-color: ${(props) => props.theme.element};
   border: none;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.11);
@@ -116,40 +117,57 @@ const CountryDetail = ({ match }) => {
     flag: '',
     borders: [],
   })
+  const [newBorders, setNewBorders] = useState([])
 
   useEffect(() => {
-    api(`/name/${country}?fullText=true`).then((response) => {
-      const { data } = response
-      setDetails(data[0])
-    })
+    api(`/name/${country}?fullText=true`)
+      .then((response) => {
+        const { data } = response
+        setDetails(data[0])
+      })
+      .catch((error) => console.error(error))
   }, [country])
 
+  useEffect(() => {
+    const arr = []
+    details.borders.map((border) => {
+      return api(`/alpha/${border}`).then((response) => {
+        const { data } = response
+        arr.push(data.name)
+        setNewBorders([...arr])
+      })
+    })
+  }, [details.borders])
+
+  console.log(details.borders)
+  console.log(newBorders)
+
+  const handleBorder = (e) => {
+    const clickedBorder = e.target.textContent
+    console.log(e.target.textContent)
+    api(`/name/${clickedBorder}?fullText=true`)
+      .then((response) => {
+        const { data } = response
+        setDetails(data[0])
+      })
+      .catch((error) => console.error(error))
+  }
+
   const {
-    alpha3Code,
     name,
     nativeName,
     population,
     region,
     subregion,
     capital,
-    topLevelDomain, //array
-    currencies, //array // .name
-    languages, //array
+    topLevelDomain,
+    currencies,
+    languages,
     flag,
-    borders, //array
   } = details
-
-  console.log(nativeName, region, borders)
-  console.log(details)
 
   return (
     <StyledCountryDetail>
-      {/* <div>
-        {languages.map((border) => {
-          return <p>{border.name}</p>
-        })}
-      </div>
-      <h1>hello world</h1> */}
       <StyledFlag src={flag} alt={name} />
       <StyledMainContainer>
         <StyledName>{name}</StyledName>
@@ -195,16 +213,25 @@ const CountryDetail = ({ match }) => {
             </StyledItem>
           </StyledGroup>
         </StyledSecondaryContainer>
-        <StyledTertiaryContainer>
-          <StyledTitle>Border Countries: </StyledTitle>
-          <StyledBorderCountries>
-            {borders.map((border) => {
-              return (
-                <StyledSingleCountry key={border}>{border}</StyledSingleCountry>
-              )
-            })}
-          </StyledBorderCountries>
-        </StyledTertiaryContainer>
+        {newBorders.length === 0 ? null : (
+          <StyledTertiaryContainer>
+            <StyledTitle>Border Countries: </StyledTitle>
+            <StyledBorderCountries>
+              {newBorders.length === 0
+                ? null
+                : newBorders.map((border) => {
+                    return (
+                      <StyledSingleCountry
+                        key={border}
+                        onClick={handleBorder}
+                        to={`/${border.toLowerCase()}`}>
+                        {border}
+                      </StyledSingleCountry>
+                    )
+                  })}
+            </StyledBorderCountries>
+          </StyledTertiaryContainer>
+        )}
       </StyledMainContainer>
     </StyledCountryDetail>
   )
