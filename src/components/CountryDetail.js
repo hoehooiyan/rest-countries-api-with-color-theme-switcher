@@ -129,10 +129,12 @@ const StyledGroup = styled.ul`
 
   &.first-group {
     margin-bottom: 4.4rem;
+    width: 50%;
   }
 
   &.second-group {
     margin-bottom: 4.5rem;
+    width: 50%;
   }
 `
 
@@ -153,6 +155,7 @@ const StyledItem = styled.li`
 
 const StyledActualData = styled.span`
   display: flex;
+  flex-wrap: wrap;
   font-weight: var(--light);
 
   .language,
