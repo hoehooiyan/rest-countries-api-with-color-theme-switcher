@@ -16,7 +16,7 @@ const StyledCountry = styled(Link)`
   margin-top: 4rem;
   text-decoration: none;
   width: 264px;
-  transition: transform 0.35s;
+  transition: var(--hoverEffect);
 
   @media screen and (min-width: 600px) {
     align-self: stretch;
@@ -46,7 +46,7 @@ const StyledCountry = styled(Link)`
   }
 
   &:hover {
-    transform: translateY(-6px);
+    transform: var(--hover);
   }
 `
 

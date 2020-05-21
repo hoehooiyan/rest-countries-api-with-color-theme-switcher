@@ -8,7 +8,8 @@ const GlobalStyles = createGlobalStyle`
     --smFont: 1.4rem;
     --mdFont: 1.6rem;
     --lgFont: 1.8rem;
-    --xlFont: 2.4rem;
+    --xlFont: 2.2rem;
+    --xxlFont: 2.4rem;
     --light: 300;
     --normal: 400;
     --semi: 600;
@@ -24,6 +25,8 @@ const GlobalStyles = createGlobalStyle`
     /* OTHER */
     --shadow: 0 0 6px rgba(0, 0, 0, 0.1);
     --radius: 5px;
+    --hover: translateY(-6px);
+    --hoverEffect: all 0.35s;
   }
 
   /* CSS RESET */

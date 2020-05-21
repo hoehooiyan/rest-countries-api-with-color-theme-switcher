@@ -7,12 +7,18 @@ export const StyledButton = styled.button`
   align-items: center;
   background-color: ${(props) => props.theme.element};
   border: none;
-  box-shadow: 0 0 7px rgba(0, 0, 0, 2.9);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
   color: ${(props) => props.theme.text};
   cursor: pointer;
-  margin: 4rem 0 6.4rem 0;
   outline: none;
-  padding: 0.7rem 2.4rem 0.6rem 2.45rem;
+  padding: 0.7rem 2.4rem;
+  width: 104px;
+  transition: var(--hoverEffect);
+
+  &:hover {
+    transform: var(--hover);
+  }
 
   .icon {
     color: ${(props) => props.theme.text};
@@ -24,7 +30,12 @@ export const StyledButton = styled.button`
 export const StyledText = styled.p`
   align-self: center;
   font-family: var(--font);
+  font-size: var(--smFont);
   font-weight: var(--light);
+
+  @media screen and (min-width: 768px) {
+    font-size: var(--mdFont);
+  }
 `
 
 const BackButton = ({ handleClick }) => {

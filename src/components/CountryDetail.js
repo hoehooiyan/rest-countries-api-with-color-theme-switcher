@@ -1,107 +1,222 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import BackButton from './BackButton'
 import addComma from '../utils/addComma'
 import api from '../api'
 
-export const StyledCountryDetail = styled.main`
+const StyledCountryDetail = styled.main`
   display: flex;
   flex-direction: column;
   color: ${(props) => props.theme.text};
-  /* margin: 0 2.7rem 4.4rem 2.8rem; */
-  /* margin: 0 auto 4.4rem auto; */
-`
-export const StyledFlag = styled.img`
-  height: 22.9rem;
-  width: 32rem;
+  padding: 0 1.6rem;
+  max-width: var(--xl);
+  width: 100%;
+  margin: 0 auto;
+
+  @media screen and (min-width: 480px) {
+    padding: 0 4rem;
+  }
+
+  @media screen and (min-width: 992px) {
+    padding: 0 8rem;
+  }
 `
 
-export const StyledMainContainer = styled.div`
+const StyledButtonWrapper = styled.div`
+  /**
+    there is an extra margin-bottom defined in header component 
+    original margin-top for the button is 40px
+    original margin-top - margin-bottom in header
+    = 40px - 24px
+    = 16px
+  */
+  margin: 1.6rem 0 6.4rem;
+`
+
+const StyledDetailWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  @media screen and (min-width: 992px) {
+    flex-direction: row;
+    justify-content: space-between;
+    height: 401px;
+    width: 100%;
+  }
+`
+
+const StyledFlag = styled.div`
+  margin-bottom: 4.4rem;
+  height: 229px;
+  width: 100%;
+
+  @media screen and (min-width: 500px) {
+    height: 250px;
+  }
+
+  @media screen and (min-width: 550px) {
+    height: 300px;
+  }
+
+  @media screen and (min-width: 600px) {
+    height: 320px;
+  }
+
+  @media screen and (min-width: 768px) {
+    height: 380px;
+  }
+
+  @media screen and (min-width: 992px) {
+    height: 350px;
+    width: 50%;
+  }
+
+  @media screen and (min-width: 1440px) {
+    height: 401px;
+    max-width: 560px;
+    margin-right: 144px;
+    width: 100%;
+  }
+
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+`
+
+const StyledMainContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 6rem;
+
+  @media screen and (min-width: 992px) {
+    width: 40%;
+  }
+
+  @media screen and (min-width: 1440px) {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 0;
+  }
 `
 
-export const StyledName = styled.h2`
+const StyledName = styled.h2`
   color: ${(props) => props.theme.text};
-  font-size: 2.2rem;
+  font-size: var(--xlFont);
   font-weight: var(--extra);
-  margin: 4.4rem 0 2.3rem;
+  margin: 0 0 2.3rem;
+
+  @media screen and (min-width: 1440px) {
+    font-size: 32px;
+  }
 `
 
-export const StyledSecondaryContainer = styled.div`
+const StyledSecondaryContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 4.1rem;
+
+  @media screen and (min-width: 1440px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 `
 
-export const StyledGroup = styled.ul`
+const StyledGroup = styled.ul`
   display: flex;
   flex-direction: column;
 
-  &:first-child {
+  &.first-group {
+    margin-bottom: 4.4rem;
+  }
+
+  &.second-group {
     margin-bottom: 4.5rem;
   }
 `
 
-export const StyledItem = styled.li`
+const StyledItem = styled.li`
+  display: flex;
+  font-size: var(--smFont);
   font-weight: var(--semi);
   list-style: none;
+
+  @media screen and (min-width: 768px) {
+    font-size: var(--mdFont);
+  }
 
   &:not(:last-child) {
     margin-bottom: 1.5rem;
   }
 `
 
-export const StyledActualData = styled.span`
+const StyledActualData = styled.span`
+  display: flex;
   font-weight: var(--light);
-  /* 
-  &.currencies {
-    &::after {
-      content: ',';
+
+  .language,
+  .currency {
+    &:not(:last-child) {
+      &::after {
+        content: ', ';
+        margin-right: 0.5rem;
+      }
     }
   }
-
-  &.languages {
-    &::after {
-      content: ',';
-    }
-  } */
 `
 
-export const StyledTertiaryContainer = styled.div`
+const StyledTertiaryContainer = styled.div`
   display: flex;
   flex-direction: column;
 `
 
-export const StyledTitle = styled.h3`
+const StyledTitle = styled.h3`
   font-size: var(--mdFont);
   font-weight: var(--semi);
   margin-bottom: 1.7rem;
+
+  @media screen and (min-width: 768px) {
+    font-size: var(--lgFont);
+  }
 `
 
-export const StyledBorderCountries = styled.div`
-  display: grid;
-  grid-gap: 1rem;
-  grid-template-columns: repeat(3, 1fr);
+const StyledBorderCountries = styled.div`
+  display: flex;
+  flex-wrap: wrap;
 `
 
-export const StyledSingleCountry = styled(Link)`
+const StyledSingleCountry = styled(Link)`
   background-color: ${(props) => props.theme.element};
   border: none;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.11);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
   color: ${(props) => props.theme.text};
   cursor: pointer;
   font-family: var(--font);
+  font-size: var(--smFont);
   font-weight: var(--light);
-  padding: 0.6rem 1.5rem;
+  padding: 0.6rem 1.6rem;
+  align-self: center;
+  text-align: center;
+  text-decoration: none;
+  margin-bottom: 1rem;
+  transition: var(--hoverEffect);
 
-  /* &:not(:last-child) {
+  @media screen and (min-width: 768px) {
+    font-size: var(--mdFont);
+  }
+
+  &:not(:last-child) {
     margin-right: 1rem;
-  } */
+  }
+
+  &:hover {
+    transform: var(--hover);
+  }
 `
 
-const CountryDetail = ({ match }) => {
+const CountryDetail = ({ match, history }) => {
   const country = match.params.country.replace(/-/g, ' ')
   const [details, setDetails] = useState({
     alpha3Code: '',
@@ -139,9 +254,6 @@ const CountryDetail = ({ match }) => {
     })
   }, [details.borders])
 
-  console.log(details.borders)
-  console.log(newBorders)
-
   const handleBorder = (e) => {
     const clickedBorder = e.target.textContent
     console.log(e.target.textContent)
@@ -168,71 +280,88 @@ const CountryDetail = ({ match }) => {
 
   return (
     <StyledCountryDetail>
-      <StyledFlag src={flag} alt={name} />
-      <StyledMainContainer>
-        <StyledName>{name}</StyledName>
-        <StyledSecondaryContainer>
-          <StyledGroup>
-            <StyledItem>
-              Native Name: <StyledActualData>{nativeName}</StyledActualData>
-            </StyledItem>
-            <StyledItem>
-              Population:{' '}
-              <StyledActualData>{addComma(population)}</StyledActualData>
-            </StyledItem>
-            <StyledItem>
-              Region: <StyledActualData>{region}</StyledActualData>
-            </StyledItem>
-            <StyledItem>
-              Sub Region: <StyledActualData>{subregion}</StyledActualData>
-            </StyledItem>
-            <StyledItem>
-              Capital: <StyledActualData>{capital}</StyledActualData>
-            </StyledItem>
-          </StyledGroup>
-          <StyledGroup>
-            <StyledItem>
-              Top Level Domain:{' '}
-              <StyledActualData>{topLevelDomain}</StyledActualData>
-            </StyledItem>
-            <StyledItem>
-              Currrencies:{' '}
-              <StyledActualData className='currencies'>
-                {currencies.map((currency) => {
-                  return <p key={currency.name}>{currency.name}</p>
-                })}
-              </StyledActualData>
-            </StyledItem>
-            <StyledItem>
-              Languages:{' '}
-              <StyledActualData className='languages'>
-                {languages.map((language) => {
-                  return <p key={language.name}>{language.name}</p>
-                })}
-              </StyledActualData>
-            </StyledItem>
-          </StyledGroup>
-        </StyledSecondaryContainer>
-        {newBorders.length === 0 ? null : (
-          <StyledTertiaryContainer>
-            <StyledTitle>Border Countries: </StyledTitle>
-            <StyledBorderCountries>
-              {newBorders.length === 0
-                ? null
-                : newBorders.map((border) => {
+      <StyledButtonWrapper>
+        <BackButton handleClick={() => history.goBack()} />
+      </StyledButtonWrapper>
+      <StyledDetailWrapper>
+        <StyledFlag>
+          <img src={flag} alt={name} />
+        </StyledFlag>
+        <StyledMainContainer>
+          <StyledName>{name}</StyledName>
+          <StyledSecondaryContainer>
+            <StyledGroup className='first-group'>
+              <StyledItem>
+                Native Name:&nbsp;
+                <StyledActualData>{nativeName}</StyledActualData>
+              </StyledItem>
+              <StyledItem>
+                Population:&nbsp;
+                <StyledActualData>{addComma(population)}</StyledActualData>
+              </StyledItem>
+              <StyledItem>
+                Region:&nbsp; <StyledActualData>{region}</StyledActualData>
+              </StyledItem>
+              <StyledItem>
+                Sub Region:&nbsp;
+                <StyledActualData>{subregion}</StyledActualData>
+              </StyledItem>
+              <StyledItem>
+                Capital:&nbsp;<StyledActualData>{capital}</StyledActualData>
+              </StyledItem>
+            </StyledGroup>
+            <StyledGroup className='second-group'>
+              <StyledItem>
+                Top Level Domain:&nbsp;
+                <StyledActualData>{topLevelDomain}</StyledActualData>
+              </StyledItem>
+              <StyledItem>
+                Currrencies:&nbsp;
+                <StyledActualData className='currencies'>
+                  {currencies.map((currency) => {
                     return (
-                      <StyledSingleCountry
-                        key={border}
-                        onClick={handleBorder}
-                        to={`/${border.toLowerCase()}`}>
-                        {border}
-                      </StyledSingleCountry>
+                      <p className='currency' key={currency.name}>
+                        {currency.name}
+                      </p>
                     )
                   })}
-            </StyledBorderCountries>
-          </StyledTertiaryContainer>
-        )}
-      </StyledMainContainer>
+                </StyledActualData>
+              </StyledItem>
+              <StyledItem>
+                Languages:&nbsp;
+                <StyledActualData>
+                  {languages.map((language) => {
+                    return (
+                      <p className='language' key={language.name}>
+                        {language.name}
+                      </p>
+                    )
+                  })}
+                </StyledActualData>
+              </StyledItem>
+            </StyledGroup>
+          </StyledSecondaryContainer>
+          {newBorders.length === 0 ? null : (
+            <StyledTertiaryContainer>
+              <StyledTitle>Border Countries: </StyledTitle>
+              <StyledBorderCountries>
+                {newBorders.length === 0
+                  ? null
+                  : newBorders.map((border) => {
+                      return (
+                        <StyledSingleCountry
+                          key={border}
+                          onClick={handleBorder}
+                          to={`/${border.replace(/\s+/g, '-').toLowerCase()}`}>
+                          {border}
+                        </StyledSingleCountry>
+                      )
+                    })}
+              </StyledBorderCountries>
+            </StyledTertiaryContainer>
+          )}
+        </StyledMainContainer>
+      </StyledDetailWrapper>
     </StyledCountryDetail>
   )
 }

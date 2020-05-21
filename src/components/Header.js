@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
 
@@ -58,7 +58,7 @@ const StyledSiteTitle = styled.h1`
   }
 
   @media screen and (min-width: 768px) {
-    font-size: var(--xlFont);
+    font-size: var(--xxlFont);
   }
 `
 
@@ -87,10 +87,16 @@ export const StyledModeText = styled.p`
 `
 
 const Header = ({ icon, toggleText, toggleTheme }) => {
+  const history = useHistory()
+
+  const handleClick = () => {
+    history.push('/')
+  }
+
   return (
     <StyledOuterContainer>
       <StyledHeader>
-        <Link exact='true' to='/' className='linkStyle'>
+        <Link exact='true' to='/' className='linkStyle' onClick={handleClick}>
           <StyledSiteTitle>Where in the world?</StyledSiteTitle>
         </Link>
         <StyledModeToggler onClick={toggleTheme}>
