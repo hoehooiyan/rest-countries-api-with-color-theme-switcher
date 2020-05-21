@@ -96,7 +96,7 @@ const Header = ({ icon, toggleText, toggleTheme }) => {
   return (
     <StyledOuterContainer>
       <StyledHeader>
-        <Link exact='true' to='/' className='linkStyle' onClick={handleClick}>
+        <Link to='/' className='linkStyle' onClick={handleClick}>
           <StyledSiteTitle>Where in the world?</StyledSiteTitle>
         </Link>
         <StyledModeToggler onClick={toggleTheme}>
