@@ -97,7 +97,7 @@ const Country = ({ flag, name, population, region, capital }) => {
       <StyledImgContainer>
         <StyledFlag src={flag} alt={name} />
       </StyledImgContainer>
-      <StyledName id='country-name'>{name}</StyledName>
+      <StyledName classs='country-name'>{name}</StyledName>
       <StyledMetadata>
         <StyledInfo>
           Population:
