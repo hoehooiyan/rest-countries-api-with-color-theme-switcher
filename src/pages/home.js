@@ -142,8 +142,6 @@ const Home = () => {
 
         <CountryContainer>
           {countries.length === 0 && <Loader />}
-        </CountryContainer>
-        <CountryContainer>
           {countries.length !== 0 && userInput
             ? renderit(searchedCountries)
             : regionSelection
