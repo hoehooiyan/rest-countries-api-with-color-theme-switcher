@@ -10,9 +10,9 @@ const StyledCountryDetail = styled.main`
   flex-direction: column;
   color: ${(props) => props.theme.text};
   padding: 0 1.6rem;
+  margin: 0 auto;
   max-width: var(--xl);
   width: 100%;
-  margin: 0 auto;
 
   @media screen and (min-width: 480px) {
     padding: 0 4rem;
@@ -74,15 +74,15 @@ const StyledFlag = styled.div`
 
   @media screen and (min-width: 1440px) {
     height: 401px;
-    max-width: 560px;
     margin-right: 144px;
+    max-width: 560px;
     width: 100%;
   }
 
   img {
+    object-fit: cover;
     height: 100%;
     width: 100%;
-    object-fit: cover;
   }
 `
 
@@ -96,9 +96,9 @@ const StyledMainContainer = styled.div`
   }
 
   @media screen and (min-width: 1440px) {
-    width: 100%;
     justify-content: center;
     margin-bottom: 0;
+    width: 100%;
   }
 `
 
@@ -129,12 +129,18 @@ const StyledGroup = styled.ul`
 
   &.first-group {
     margin-bottom: 4.4rem;
-    width: 50%;
+
+    @media screen and (min-width: 1440px) {
+      width: 50%;
+    }
   }
 
   &.second-group {
     margin-bottom: 4.5rem;
-    width: 50%;
+
+    @media screen and (min-width: 1440px) {
+      width: 50%;
+    }
   }
 `
 
@@ -190,6 +196,7 @@ const StyledBorderCountries = styled.div`
 `
 
 const StyledSingleCountry = styled(Link)`
+  align-self: center;
   background-color: ${(props) => props.theme.element};
   border: none;
   border-radius: var(--radius);
@@ -199,11 +206,10 @@ const StyledSingleCountry = styled(Link)`
   font-family: var(--font);
   font-size: var(--smFont);
   font-weight: var(--light);
+  margin-bottom: 1rem;
   padding: 0.6rem 1.6rem;
-  align-self: center;
   text-align: center;
   text-decoration: none;
-  margin-bottom: 1rem;
   transition: var(--hoverEffect);
 
   @media screen and (min-width: 768px) {
@@ -237,6 +243,7 @@ const CountryDetail = ({ match, history }) => {
   })
   const [newBorders, setNewBorders] = useState([])
 
+  // make api call to a single country
   useEffect(() => {
     api(`/name/${country}?fullText=true`)
       .then((response) => {
@@ -246,6 +253,7 @@ const CountryDetail = ({ match, history }) => {
       .catch((error) => console.error(error))
   }, [country])
 
+  // make api call to get the full name of the border countries
   useEffect(() => {
     const arr = []
     details.borders.map((border) => {
@@ -257,6 +265,7 @@ const CountryDetail = ({ match, history }) => {
     })
   }, [details.borders])
 
+  // the response when the user click through the border countries
   const handleBorder = (e) => {
     const clickedBorder = e.target.textContent
     console.log(e.target.textContent)
