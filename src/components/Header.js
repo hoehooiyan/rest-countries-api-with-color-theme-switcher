@@ -7,9 +7,9 @@ const StyledOuterContainer = styled.div`
   background-color: ${(props) => props.theme.element};
   box-shadow: var(--shadow);
   margin-bottom: 2.4rem;
-  width: 100%;
   position: sticky;
   top: 0;
+  width: 100%;
   z-index: 100;
 
   @media screen and (min-width: 768px) {
@@ -28,8 +28,8 @@ const StyledHeader = styled.header`
   background-color: ${(props) => props.theme.element};
   margin: 0 auto;
   max-width: var(--xl);
-  width: 100%;
   padding: 3rem 1.6rem;
+  width: 100%;
 
   @media screen and (min-width: 480px) {
     padding: 2.5rem 2rem;
