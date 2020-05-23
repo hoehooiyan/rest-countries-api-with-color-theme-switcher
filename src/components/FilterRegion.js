@@ -53,9 +53,9 @@ export const StyledDropdown = styled.div`
   box-shadow: var(--shadow);
   margin: 0 15.9rem 0 1.6rem;
   padding: 1.6rem 2.4rem;
-  width: 20rem;
   position: absolute;
   top: 5.3rem;
+  width: 20rem;
   z-index: 10;
 `
 
@@ -76,7 +76,7 @@ export const StyledRegion = styled.li`
 const FilterRegion = ({ selectedRegion }) => {
   const [isOpen, setIsOpen] = useState(false)
 
-  const toggleDropdown = (e) => {
+  const toggleDropdown = () => {
     setIsOpen(!isOpen)
   }
 

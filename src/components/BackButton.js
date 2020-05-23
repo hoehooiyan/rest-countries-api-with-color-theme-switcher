@@ -13,8 +13,8 @@ export const StyledButton = styled.button`
   cursor: pointer;
   outline: none;
   padding: 0.7rem 2.4rem;
-  width: 104px;
   transition: var(--hoverEffect);
+  width: 104px;
 
   &:hover {
     transform: var(--hover);

@@ -11,9 +11,9 @@ const StyledLoader = styled.div`
   border: 10px solid ${(props) => props.theme.background};
   border-radius: 50%;
   border-top: 10px solid ${(props) => props.theme.text};
-  width: 80px;
   height: 80px;
   margin: 8rem auto;
+  width: 80px;
 `
 
 const Loader = () => {

@@ -3,8 +3,8 @@ import styled from 'styled-components'
 
 const StyledCountryWrapper = styled.main`
   display: flex;
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
   margin: 0 auto;
   max-width: var(--xl);
   padding: 0 1.6rem;

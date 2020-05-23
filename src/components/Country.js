@@ -1,13 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import addComma from '../utils/addComma'
 import styled from 'styled-components'
+import addComma from '../utils/addComma'
 import LoadingImg from '../images/loading.gif'
 
 const StyledCountry = styled(Link)`
   display: flex;
-  flex-direction: column;
   align-self: center;
+  flex-direction: column;
   background-color: ${(props) => props.theme.element};
   border-radius: var(--radius);
   box-shadow: var(--shadow);
@@ -15,8 +15,8 @@ const StyledCountry = styled(Link)`
   cursor: pointer;
   margin-top: 4rem;
   text-decoration: none;
-  width: 264px;
   transition: var(--hoverEffect);
+  width: 264px;
 
   @media screen and (min-width: 600px) {
     align-self: stretch;
@@ -52,20 +52,20 @@ const StyledCountry = styled(Link)`
 
 const StyledImgContainer = styled.div`
   background-image: url(${LoadingImg});
+  background-position: center;
+  background-size: contain;
   border-top-left-radius: var(--radius);
   border-top-right-radius: var(--radius);
   height: 160px;
   width: 100%;
-  background-position: center;
-  background-size: contain;
 `
 
 const StyledFlag = styled.img`
   border-top-left-radius: var(--radius);
   border-top-right-radius: var(--radius);
+  object-fit: cover;
   height: 160px;
   width: 100%;
-  object-fit: cover;
 `
 
 const StyledName = styled.h2`

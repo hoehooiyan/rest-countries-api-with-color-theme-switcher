@@ -7,13 +7,6 @@ import SearchBar from '../components/SearchBar'
 import FilterRegion from '../components/FilterRegion'
 import CountryContainer from '../components/CountryContainer'
 import Country from '../components/Country'
-import {
-  StyledPaginationContainer,
-  StyledNavigateButton,
-  ShowCurrent,
-  NextPage,
-  PreviousPage,
-} from '../components/Pagination'
 import api from '../api'
 
 const StyledOuterContainer = styled.div`
@@ -39,36 +32,20 @@ const Home = () => {
   const [searchedCountries, setSearchedCountries] = useState([])
   const [regionSelection, setRegionSelection] = useState('')
   const [filteredCountries, setFilteredCountries] = useState([])
-  // const [currentPage, setCurrentPage] = useState(1)
-  // const [pagination, setPagination] = useState({
-  //   itemPerPage: 8,
-  //   currentPage: 1,
-  //   firstPage: 1,
-  //   lastPage: 0,
-  //   totalPage: 0,
-  // })
 
-  // const indexOfLastCountry = pagination.currentPage * pagination.itemPerPage
-  // const indexOfFirstCountry = indexOfLastCountry - pagination.itemPerPage
+  // make an api call to get all the countries data
+  useEffect(() => {
+    api('/all')
+      .then((response) => {
+        const { data } = response
+        setCountries(data)
+        // setSearchedCountries(data)
+        // setFilteredCountries(data)
+      })
+      .catch((error) => console.error(error))
+  }, [])
 
-  /**
-   * @reference: Pagination in React
-   * https://codepen.io/PiotrBerebecki/pen/pEYPbY?editors=0010
-   */
-  // const countryPerPage = 8
-  // const totalPages = Math.ceil(countries.length / countryPerPage)
-  // const isFirst = 1
-  // const isLast = totalPages
-
-  // logic for displaying current countries
-  // const indexOfLastCountry = pagination.currentPage * pagination.itemPerPage
-  // const indexOfFirstCountry = indexOfLastCountry - pagination.itemPerPage
-  // const currentCountries = countries.slice(
-  //   indexOfFirstCountry,
-  //   indexOfLastCountry
-  // )
-
-  const renderit = (arr) => {
+  const renderCountries = (arr) => {
     return arr.map((item, i) => {
       const { flag, name, population, region, capital } = item
       return (
@@ -84,14 +61,10 @@ const Home = () => {
     })
   }
 
-  // const handleNextPage = () => {
-  //   setPagination(pagination.currentPage + 1)
-  // }
-
-  // const handlePreviousPage = () => {
-  //   setPagination(pagination.currentPage - 1)
-  // }
-
+  /**
+   * after getting the user input
+   * start the filtering process
+   */
   const searchCountry = (e) => {
     setUserInput(e.target.value.toLowerCase())
   }
@@ -106,6 +79,10 @@ const Home = () => {
     }
   }, [countries, userInput])
 
+  /**
+   * detect the region selected by the user
+   * display according to the selected region
+   */
   const filterCountry = (e) => {
     setRegionSelection(e.target.textContent.toLowerCase())
   }
@@ -120,18 +97,6 @@ const Home = () => {
     }
   }, [countries, regionSelection])
 
-  // make an api call to get all the countries data
-  useEffect(() => {
-    api('/all')
-      .then((response) => {
-        const { data } = response
-        setCountries(data)
-        setSearchedCountries(data)
-        setFilteredCountries(data)
-      })
-      .catch((error) => console.error(error))
-  }, [])
-
   return (
     <Layout>
       <StyledOuterContainer>
@@ -143,28 +108,11 @@ const Home = () => {
         <CountryContainer>
           {countries.length === 0 && <Loader />}
           {countries.length !== 0 && userInput
-            ? renderit(searchedCountries)
+            ? renderCountries(searchedCountries)
             : regionSelection
-            ? renderit(filteredCountries)
-            : renderit(countries)}
+            ? renderCountries(filteredCountries)
+            : renderCountries(countries)}
         </CountryContainer>
-
-        {/* {countries.length !== 0 && (
-          <StyledPaginationContainer>
-            <ShowCurrent
-              current={pagination.currentPage}
-              total={pagination.totalPage}
-            />
-            <StyledNavigateButton>
-              {pagination.currentPage === pagination.firstPage ? null : (
-                <PreviousPage handlePreviousPage={handlePreviousPage} />
-              )}
-              {pagination.currentPage === pagination.lastPage ? null : (
-                <NextPage handleNextPage={handleNextPage} />
-              )}
-            </StyledNavigateButton>
-          </StyledPaginationContainer>
-        )} */}
       </StyledOuterContainer>
     </Layout>
   )

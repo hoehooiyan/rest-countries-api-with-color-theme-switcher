@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import styled, { ThemeProvider } from 'styled-components'
-
 import Header from './Header'
 import Footer from './Footer'
 import GlobalStyles from '../styles/index'
@@ -28,7 +27,6 @@ const Layout = ({ children }) => {
   useEffect(() => {
     // implement localStorage to persist user selected theme
     const localData = localStorage.getItem('isLightMode')
-
     // check if the localStorage is available
     localData === true ? setTheme(true) : setTheme(false)
   }, [])

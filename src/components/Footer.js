@@ -26,7 +26,13 @@ const Footer = () => {
   return (
     <StyledFooter>
       <StyledText>
-        Made with ❤ by <a href='https://twitter.com/hooiyancodes'>Hooi Yan</a>
+        Made with ❤ by{' '}
+        <a
+          href='https://twitter.com/hooiyancodes'
+          target='_blank'
+          rel='noopener noreferrer'>
+          Hooi Yan
+        </a>
       </StyledText>
     </StyledFooter>
   )

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import Layout from './Layout'
 import BackButton from './BackButton'
 import addComma from '../utils/addComma'
 import api from '../api'
@@ -291,90 +292,94 @@ const CountryDetail = ({ match, history }) => {
   } = details
 
   return (
-    <StyledCountryDetail>
-      <StyledButtonWrapper>
-        <BackButton handleClick={() => history.goBack()} />
-      </StyledButtonWrapper>
-      <StyledDetailWrapper>
-        <StyledFlag>
-          <img src={flag} alt={name} />
-        </StyledFlag>
-        <StyledMainContainer>
-          <StyledName>{name}</StyledName>
-          <StyledSecondaryContainer>
-            <StyledGroup className='first-group'>
-              <StyledItem>
-                Native Name:&nbsp;
-                <StyledActualData>{nativeName}</StyledActualData>
-              </StyledItem>
-              <StyledItem>
-                Population:&nbsp;
-                <StyledActualData>{addComma(population)}</StyledActualData>
-              </StyledItem>
-              <StyledItem>
-                Region:&nbsp; <StyledActualData>{region}</StyledActualData>
-              </StyledItem>
-              <StyledItem>
-                Sub Region:&nbsp;
-                <StyledActualData>{subregion}</StyledActualData>
-              </StyledItem>
-              <StyledItem>
-                Capital:&nbsp;<StyledActualData>{capital}</StyledActualData>
-              </StyledItem>
-            </StyledGroup>
-            <StyledGroup className='second-group'>
-              <StyledItem>
-                Top Level Domain:&nbsp;
-                <StyledActualData>{topLevelDomain}</StyledActualData>
-              </StyledItem>
-              <StyledItem>
-                Currrencies:&nbsp;
-                <StyledActualData className='currencies'>
-                  {currencies.map((currency) => {
-                    return (
-                      <p className='currency' key={currency.name}>
-                        {currency.name}
-                      </p>
-                    )
-                  })}
-                </StyledActualData>
-              </StyledItem>
-              <StyledItem>
-                Languages:&nbsp;
-                <StyledActualData>
-                  {languages.map((language) => {
-                    return (
-                      <p className='language' key={language.name}>
-                        {language.name}
-                      </p>
-                    )
-                  })}
-                </StyledActualData>
-              </StyledItem>
-            </StyledGroup>
-          </StyledSecondaryContainer>
-          {newBorders.length === 0 ? null : (
-            <StyledTertiaryContainer>
-              <StyledTitle>Border Countries: </StyledTitle>
-              <StyledBorderCountries>
-                {newBorders.length === 0
-                  ? null
-                  : newBorders.map((border) => {
+    <Layout>
+      <StyledCountryDetail>
+        <StyledButtonWrapper>
+          <BackButton handleClick={() => history.goBack()} />
+        </StyledButtonWrapper>
+        <StyledDetailWrapper>
+          <StyledFlag>
+            <img src={flag} alt={name} />
+          </StyledFlag>
+          <StyledMainContainer>
+            <StyledName>{name}</StyledName>
+            <StyledSecondaryContainer>
+              <StyledGroup className='first-group'>
+                <StyledItem>
+                  Native Name:&nbsp;
+                  <StyledActualData>{nativeName}</StyledActualData>
+                </StyledItem>
+                <StyledItem>
+                  Population:&nbsp;
+                  <StyledActualData>{addComma(population)}</StyledActualData>
+                </StyledItem>
+                <StyledItem>
+                  Region:&nbsp; <StyledActualData>{region}</StyledActualData>
+                </StyledItem>
+                <StyledItem>
+                  Sub Region:&nbsp;
+                  <StyledActualData>{subregion}</StyledActualData>
+                </StyledItem>
+                <StyledItem>
+                  Capital:&nbsp;<StyledActualData>{capital}</StyledActualData>
+                </StyledItem>
+              </StyledGroup>
+              <StyledGroup className='second-group'>
+                <StyledItem>
+                  Top Level Domain:&nbsp;
+                  <StyledActualData>{topLevelDomain}</StyledActualData>
+                </StyledItem>
+                <StyledItem>
+                  Currrencies:&nbsp;
+                  <StyledActualData className='currencies'>
+                    {currencies.map((currency) => {
                       return (
-                        <StyledSingleCountry
-                          key={border}
-                          onClick={handleBorder}
-                          to={`/${border.replace(/\s+/g, '-').toLowerCase()}`}>
-                          {border}
-                        </StyledSingleCountry>
+                        <p className='currency' key={currency.name}>
+                          {currency.name}
+                        </p>
                       )
                     })}
-              </StyledBorderCountries>
-            </StyledTertiaryContainer>
-          )}
-        </StyledMainContainer>
-      </StyledDetailWrapper>
-    </StyledCountryDetail>
+                  </StyledActualData>
+                </StyledItem>
+                <StyledItem>
+                  Languages:&nbsp;
+                  <StyledActualData>
+                    {languages.map((language) => {
+                      return (
+                        <p className='language' key={language.name}>
+                          {language.name}
+                        </p>
+                      )
+                    })}
+                  </StyledActualData>
+                </StyledItem>
+              </StyledGroup>
+            </StyledSecondaryContainer>
+            {newBorders.length === 0 ? null : (
+              <StyledTertiaryContainer>
+                <StyledTitle>Border Countries: </StyledTitle>
+                <StyledBorderCountries>
+                  {newBorders.length === 0
+                    ? null
+                    : newBorders.map((border) => {
+                        return (
+                          <StyledSingleCountry
+                            key={border}
+                            onClick={handleBorder}
+                            to={`/${border
+                              .replace(/\s+/g, '-')
+                              .toLowerCase()}`}>
+                            {border}
+                          </StyledSingleCountry>
+                        )
+                      })}
+                </StyledBorderCountries>
+              </StyledTertiaryContainer>
+            )}
+          </StyledMainContainer>
+        </StyledDetailWrapper>
+      </StyledCountryDetail>
+    </Layout>
   )
 }
 
