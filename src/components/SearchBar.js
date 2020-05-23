@@ -47,14 +47,14 @@ export const StyledInput = styled.input`
   font-size: var(--smFont);
   height: 4.8rem;
   outline: none;
-  padding: 1.6rem 3.2rem 1.6rem 7.4rem; // !FIXME
+  padding: 1.6rem 3.2rem 1.6rem 7.4rem;
   width: 100%;
 
   @media screen and (min-width: 768px) {
     font-size: var(--mdFont);
   }
 
-  ::placeholder {
+  &::placeholder {
     color: ${(props) => props.theme.input};
 
     @media screen and (min-width: 768px) {
@@ -74,8 +74,8 @@ const SearchBar = ({ searchCountry }) => {
       <StyledInput
         aria-label='search for a country'
         name='search'
-        placeholder='Search for a country...'
         onChange={searchCountry}
+        placeholder='Search for a country...'
       />
     </StyledSearchBar>
   )
